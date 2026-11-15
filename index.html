@@ -1,0 +1,2978 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>PHÒNG HỌP KHÔNG GIẤY XÃ MƯỜNG LẦM</title>
+  
+  <!-- Font & Icons -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- QRCode.js -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+  <!-- Thư viện Xem Tài Liệu Trực Tuyến: PDF.js, Mammoth (Word DOCX), SheetJS (Excel) -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/mammoth/1.6.0/mammoth.browser.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['"Be Vietnam Pro"', 'sans-serif'],
+          },
+          colors: {
+            redgov: {
+              50: '#fff1f2',
+              100: '#ffe4e6',
+              500: '#e11d48',
+              600: '#be123c',
+              700: '#9f1239',
+              800: '#881337',
+              900: '#4c0519',
+            },
+            goldgov: {
+              400: '#facc15',
+              500: '#eab308',
+              600: '#ca8a04',
+            },
+            bizblue: {
+              50: '#eff6ff',
+              100: '#dbeafe',
+              500: '#3b82f6',
+              600: '#2563eb',
+              700: '#1d4ed8',
+              800: '#1e40af',
+              900: '#1e3a8a',
+            }
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    ::-webkit-scrollbar { width: 6px; height: 6px; }
+    ::-webkit-scrollbar-track { background: rgba(0,0,0,0.05); }
+    ::-webkit-scrollbar-thumb { background: rgba(0,0,0,0.2); border-radius: 999px; }
+    .custom-scroll-hidden::-webkit-scrollbar { display: none; }
+    .custom-scroll-hidden { -ms-overflow-style: none; scrollbar-width: none; }
+    @media print {
+      body * { visibility: hidden; }
+      #printArea, #printArea * { visibility: visible; }
+      #printArea { position: absolute; left: 0; top: 0; width: 100%; display: block !important; }
+    }
+
+    /* Định dạng văn bản Word .docx hiển thị trực tuyến */
+    .docx-rendered-content table {
+      border-collapse: collapse;
+      width: 100%;
+      margin: 1.25rem 0;
+      font-size: 0.875rem;
+      border: 1px solid #cbd5e1;
+    }
+    .docx-rendered-content th, .docx-rendered-content td {
+      border: 1px solid #cbd5e1;
+      padding: 0.5rem 0.75rem;
+      text-align: left;
+      vertical-align: top;
+    }
+    .docx-rendered-content th {
+      background-color: #f1f5f9;
+      font-weight: 700;
+    }
+    .docx-rendered-content h1, .docx-rendered-content h2, .docx-rendered-content h3 {
+      color: #9f1239;
+      font-weight: 800;
+      margin-top: 1.25rem;
+      margin-bottom: 0.5rem;
+      line-height: 1.3;
+    }
+    .docx-rendered-content p {
+      margin-bottom: 0.75rem;
+      line-height: 1.6;
+      text-align: justify;
+    }
+    .docx-rendered-content ul, .docx-rendered-content ol {
+      padding-left: 1.5rem;
+      margin-bottom: 0.75rem;
+    }
+    .docx-rendered-content li {
+      margin-bottom: 0.25rem;
+    }
+
+    /* Định dạng bảng Excel .xlsx hiển thị trực tuyến */
+    #renderedExcelTable {
+      width: 100%;
+      border-collapse: collapse;
+      font-family: inherit;
+    }
+    #renderedExcelTable tr:first-child td, #renderedExcelTable tr:first-child th {
+      background-color: #f1f5f9;
+      font-weight: 800;
+      color: #0f172a;
+      border-bottom: 2px solid #cbd5e1;
+    }
+    #renderedExcelTable td, #renderedExcelTable th {
+      padding: 7px 12px;
+      border: 1px solid #e2e8f0;
+      font-size: 12px;
+    }
+  </style>
+</head>
+<body class="bg-slate-50 text-slate-800 antialiased min-h-screen flex flex-col font-sans transition-colors duration-200" id="appBody">
+
+  <!-- =========================================================================
+       TRANG ĐẦU TIÊN (LANDING PORTAL): LỰA CHỌN PHƯƠNG ÁN ĐẠI BIỂU DỰ / ĐĂNG NHẬP
+       ========================================================================= -->
+  <div id="landingPortal" class="fixed inset-0 z-50 bg-slate-900 overflow-y-auto flex flex-col justify-between py-6 px-4 sm:px-6">
+    <!-- Nền trang trí cờ đỏ sao vàng & hoa văn hành chính số -->
+    <div class="absolute inset-0 bg-gradient-to-br from-redgov-950 via-slate-900 to-redgov-900 opacity-90 pointer-events-none"></div>
+    <div class="absolute inset-0 opacity-10 pointer-events-none bg-[radial-gradient(#fff_1px,transparent_1px)] [background-size:20px_20px]"></div>
+
+    <!-- Header Cổng Chào -->
+    <div class="relative z-10 max-w-4xl mx-auto text-center space-y-2 pt-2 sm:pt-6">
+      <div class="inline-flex items-center space-x-2 bg-red-600/30 border border-red-500/40 text-goldgov-400 px-4 py-1 rounded-full text-xs font-bold tracking-wide backdrop-blur-md">
+        <i class="fa-solid fa-star text-goldgov-400 animate-pulse"></i>
+        <span>XÃ MƯỜNG LẦM - TỈNH SƠN LA</span>
+      </div>
+      <h1 class="text-2xl sm:text-4xl font-black text-white tracking-tight drop-shadow-md uppercase">
+        PHÒNG HỌP KHÔNG GIẤY XÃ MƯỜNG LẦM
+      </h1>
+      <p class="text-xs sm:text-sm text-red-100/80 max-w-2xl mx-auto">
+        Hệ thống số hóa tài liệu kỳ họp, hội nghị và các cuộc họp trên địa bàn Xã Mường Lầm - Tỉnh Sơn La.
+      </p>
+
+      <!-- Thông báo khi quét mã QR vào trực tiếp -->
+      <div id="portalQrNotice" class="hidden mt-3 p-3 bg-goldgov-500/20 border border-goldgov-400/50 rounded-2xl text-goldgov-300 text-xs font-bold max-w-xl mx-auto flex items-center justify-center space-x-2 animate-bounce">
+        <i class="fa-solid fa-qrcode text-base"></i>
+        <span>Đã quét mã vào: <b id="portalQrMeetingTitle" class="text-white underline"></b></span>
+      </div>
+    </div>
+
+    <!-- 2 KHỐI LỰA CHỌN CHÍNH (ĐẠI BIỂU DỰ / ĐĂNG NHẬP TẠO HỌP) -->
+    <div class="relative z-10 max-w-4xl mx-auto w-full my-6 grid grid-cols-1 md:grid-cols-2 gap-6 items-stretch">
+      
+      <!-- PHƯƠNG ÁN 1: DÀNH CHO ĐẠI BIỂU DỰ HỌP -->
+      <div class="bg-white/95 backdrop-blur-md rounded-3xl p-6 sm:p-7 shadow-2xl border-2 border-red-500/30 flex flex-col justify-between hover:border-red-500 transition duration-300">
+        <div class="space-y-4">
+          <div class="flex items-center justify-between">
+            <span class="px-3 py-1 rounded-full bg-red-100 text-redgov-700 text-xs font-extrabold uppercase tracking-wider flex items-center">
+              <i class="fa-solid fa-users mr-1.5"></i> Phương án 1
+            </span>
+            <span class="text-[11px] font-bold text-emerald-600 bg-emerald-50 px-2.5 py-0.5 rounded-full border border-emerald-200">
+              Không cần mật khẩu
+            </span>
+          </div>
+
+          <div class="space-y-1">
+            <h3 class="text-lg sm:text-xl font-black text-slate-900 flex items-center">
+              <i class="fa-solid fa-user-check text-redgov-600 mr-2 text-xl"></i>
+              ĐẠI BIỂU DỰ HỌP
+            </h3>
+            <p class="text-xs text-slate-500">
+              Dành cho Đại biểu HĐND, đại biểu khách mời và trưởng các bản vào xem văn kiện, báo cáo và chương trình kỳ họp.
+            </p>
+          </div>
+
+          <div class="space-y-3 pt-2 text-xs">
+            <div>
+              <label class="block font-bold text-slate-700 mb-1">Chọn cuộc họp tham dự:</label>
+              <select id="portalMeetingSelect" class="w-full p-2.5 rounded-xl border border-slate-300 bg-slate-50 text-slate-800 font-bold focus:ring-2 focus:ring-redgov-500 focus:outline-none">
+                <!-- Rendered dynamically -->
+              </select>
+            </div>
+
+            <div>
+              <label class="block font-bold text-slate-700 mb-1">Họ và tên Đại biểu (Tùy chọn):</label>
+              <input type="text" id="portalDelegateName" placeholder="Ví dụ: Đ/c Lò Văn Nam" class="w-full p-2.5 rounded-xl border border-slate-300 bg-white focus:ring-2 focus:ring-redgov-500 focus:outline-none">
+            </div>
+
+            <div>
+              <label class="block font-bold text-slate-700 mb-1">Đơn vị / Đại biểu bản:</label>
+              <input type="text" id="portalDelegateUnit" placeholder="Ví dụ: Đại biểu Bản Lầm / Bản Nà É" class="w-full p-2.5 rounded-xl border border-slate-300 bg-white focus:ring-2 focus:ring-redgov-500 focus:outline-none">
+            </div>
+          </div>
+        </div>
+
+        <div class="pt-5 mt-4 border-t border-slate-100">
+          <button onclick="enterAsDelegate()" class="w-full py-3 bg-gradient-to-r from-redgov-700 to-redgov-600 hover:from-redgov-800 hover:to-redgov-700 text-white font-black text-sm rounded-2xl shadow-lg shadow-redgov-700/30 transition flex items-center justify-center space-x-2">
+            <span>VÀO PHÒNG HỌP XEM TÀI LIỆU</span>
+            <i class="fa-solid fa-arrow-right"></i>
+          </button>
+          <p class="text-[11px] text-center text-slate-400 mt-2">
+            <i class="fa-solid fa-mobile-screen-button mr-1"></i> Xem trực tiếp trên điện thoại & máy tính
+          </p>
+        </div>
+      </div>
+
+      <!-- PHƯƠNG ÁN 2: DÀNH CHO CÁN BỘ / THƯ KÝ / ADMIN ĐĂNG NHẬP TẠO HỌP -->
+      <div class="bg-white/95 backdrop-blur-md rounded-3xl p-6 sm:p-7 shadow-2xl border-2 border-slate-200 flex flex-col justify-between hover:border-slate-400 transition duration-300">
+        <div class="space-y-4">
+          <div class="flex items-center justify-between">
+            <span class="px-3 py-1 rounded-full bg-slate-100 text-slate-700 text-xs font-extrabold uppercase tracking-wider flex items-center">
+              <i class="fa-solid fa-lock mr-1.5"></i> Phương án 2
+            </span>
+            <span class="text-[11px] font-bold text-amber-700 bg-amber-50 px-2.5 py-0.5 rounded-full border border-amber-200">
+              Dành cho Ban Tổ chức
+            </span>
+          </div>
+
+          <div class="space-y-1">
+            <h3 class="text-lg sm:text-xl font-black text-slate-900 flex items-center">
+              <i class="fa-solid fa-folder-plus text-amber-600 mr-2 text-xl"></i>
+              ĐĂNG NHẬP TẠO CUỘC HỌP
+            </h3>
+            <p class="text-xs text-slate-500">
+              Dành cho Lãnh đạo xã, Thư ký kỳ họp và Quản trị viên để tạo tệp cuộc họp, đưa tài liệu lên và xuất mã QR.
+            </p>
+          </div>
+
+          <div class="space-y-3 pt-2 text-xs">
+            <div>
+              <label class="block font-bold text-slate-700 mb-1">Tên đăng nhập:</label>
+              <input type="text" id="portalUsername" placeholder="Ví dụ: admin hoặc thuky_muonglam" class="w-full p-2.5 rounded-xl border border-slate-300 bg-white focus:ring-2 focus:ring-slate-800 focus:outline-none">
+            </div>
+
+            <div>
+              <label class="block font-bold text-slate-700 mb-1">Mật khẩu:</label>
+              <input type="password" id="portalPassword" placeholder="Nhập mật khẩu" class="w-full p-2.5 rounded-xl border border-slate-300 bg-white focus:ring-2 focus:ring-slate-800 focus:outline-none">
+            </div>
+
+            <!-- Gợi ý tài khoản mẫu Xã Mường Lầm -->
+            <div class="p-2.5 bg-slate-50 rounded-xl border border-slate-200 text-[11px] text-slate-500 space-y-1">
+              <p class="font-bold text-slate-700">Tài khoản cán bộ xã Mường Lầm:</p>
+              <div class="flex justify-between">
+                <span>Quản trị viên (Admin):</span>
+                <span class="font-mono font-bold text-slate-900">admin / 123</span>
+              </div>
+              <div class="flex justify-between">
+                <span>Thư ký VP HĐND-UBND:</span>
+                <span class="font-mono font-bold text-slate-900">thuky_muonglam / 123</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="pt-5 mt-4 border-t border-slate-100">
+          <button onclick="loginFromPortal()" class="w-full py-3 bg-slate-900 hover:bg-black text-white font-black text-sm rounded-2xl shadow-lg transition flex items-center justify-center space-x-2">
+            <i class="fa-solid fa-right-to-bracket mr-1"></i>
+            <span>ĐĂNG NHẬP ĐỂ TẠO & ĐIỀU HÀNH CUỘC HỌP</span>
+          </button>
+          <p class="text-[11px] text-center text-slate-400 mt-2">
+            <i class="fa-solid fa-shield-halved mr-1"></i> Phân quyền tải file và quản lý mã QR đại biểu
+          </p>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Footer Cổng Chào -->
+    <div class="relative z-10 text-center text-[11px] text-red-200/60 pb-2">
+      XÃ MƯỜNG LẦM - TỈNH SƠN LA • PHÒNG HỌP KHÔNG GIẤY
+    </div>
+  </div>
+
+  <!-- =========================================================================
+       GIAO DIỆN CHÍNH PHÒNG HỌP (MAIN APP) - HIỂN THỊ SAU KHI VÀO HOẶC ĐĂNG NHẬP
+       ========================================================================= -->
+  <div id="mainApp" class="flex-1 flex flex-col min-h-screen">
+    
+    <!-- ==================== HEADER THANH ĐIỀU HƯỚNG ==================== -->
+    <header class="sticky top-0 z-40 bg-white/95 backdrop-blur shadow-sm border-b border-slate-200 transition-colors" id="mainHeader">
+      <div class="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8">
+        <div class="flex items-center justify-between h-16 sm:h-20">
+          
+          <!-- Logo & Thương hiệu PHÒNG HỌP KHÔNG GIẤY XÃ MƯỜNG LẦM -->
+          <div class="flex items-center space-x-3 cursor-pointer" onclick="switchTab('documents')">
+            <div id="headerLogoBadge" class="w-10 h-10 sm:w-12 sm:h-12 rounded-xl bg-gradient-to-tr from-redgov-700 to-redgov-500 text-white flex items-center justify-center text-xl sm:text-2xl font-bold shadow-md shadow-redgov-700/20">
+              <i class="fa-solid fa-tablet-screen-button" id="headerIcon"></i>
+            </div>
+            <div>
+              <div class="flex items-center space-x-2">
+                <span class="text-[10px] sm:text-xs font-black uppercase tracking-wider px-2 py-0.5 rounded bg-red-100 text-red-800 flex items-center">
+                  <i class="fa-solid fa-star mr-1 text-goldgov-500"></i> PHÒNG HỌP KHÔNG GIẤY XÃ MƯỜNG LẦM
+                </span>
+                <span id="badgeEventType" class="text-[10px] sm:text-xs font-bold uppercase tracking-wider px-2 py-0.5 rounded bg-slate-100 text-slate-700 hidden sm:inline-block">
+                  Kỳ họp HĐND
+                </span>
+              </div>
+              <h1 id="headerMeetingTitle" class="text-sm sm:text-base font-bold text-slate-900 line-clamp-1 max-w-[180px] sm:max-w-md lg:max-w-xl">
+                Đang tải thông tin cuộc họp...
+              </h1>
+            </div>
+          </div>
+
+          <!-- Menu Điều hướng & Tài khoản người dùng -->
+          <div class="flex items-center space-x-1.5 sm:space-x-3">
+            
+            <!-- Nút Về Trang Cổng Chào (Đổi vai trò) -->
+            <button onclick="returnToPortal()" title="Về cổng chính chọn lại vai trò" class="p-2 text-slate-600 hover:text-slate-900 rounded-lg hover:bg-slate-100 transition text-sm">
+              <i class="fa-solid fa-house text-base"></i>
+            </button>
+
+            <!-- Nút Đổi Theme màu sắc -->
+            <button onclick="toggleThemeStyle()" title="Đổi giao diện: Đỏ truyền thống / Xanh công nghệ" class="p-2 text-slate-600 hover:text-slate-900 rounded-lg hover:bg-slate-100 transition text-sm">
+              <i class="fa-solid fa-palette text-base"></i>
+            </button>
+
+            <!-- Nút Xuất Mã QR Phòng Họp -->
+            <button onclick="openQRModal()" class="flex items-center space-x-1.5 px-2.5 py-1.5 sm:px-3 sm:py-2 text-xs sm:text-sm font-bold rounded-lg bg-red-50 hover:bg-red-100 text-redgov-700 border border-red-200 transition">
+              <i class="fa-solid fa-qrcode text-sm sm:text-base"></i>
+              <span class="hidden sm:inline">Xuất Mã QR</span>
+            </button>
+
+            <!-- Khối thông tin Người Dùng / Đại biểu -->
+            <div id="userProfileMenu" class="relative">
+              <button onclick="toggleUserDropdown()" class="flex items-center space-x-2 p-1.5 rounded-xl hover:bg-slate-100 border border-slate-200 bg-white">
+                <div id="userAvatar" class="w-7 h-7 sm:w-8 sm:h-8 rounded-lg bg-redgov-600 text-white font-bold flex items-center justify-center text-xs">
+                  ĐB
+                </div>
+                <div class="text-left hidden md:block pr-1">
+                  <p id="userNameDisplay" class="text-xs font-bold text-slate-800 line-clamp-1">Đại biểu dự họp</p>
+                  <p id="userRoleBadge" class="text-[10px] text-red-600 font-semibold">Đại biểu</p>
+                </div>
+                <i class="fa-solid fa-chevron-down text-[10px] text-slate-400"></i>
+              </button>
+
+              <!-- Dropdown Menu Người Dùng -->
+              <div id="userDropdown" class="hidden absolute right-0 mt-2 w-60 bg-white rounded-2xl shadow-xl border border-slate-200 py-2 z-50 text-xs">
+                <div class="px-4 py-2 border-b border-slate-100">
+                  <p class="font-bold text-slate-900" id="dropdownUserName">Đại biểu dự họp</p>
+                  <p class="text-slate-400 text-[11px]" id="dropdownUserDept">Xã Mường Lầm</p>
+                </div>
+                <button onclick="openCreateMeetingModal()" id="btnMenuCreateMeeting" class="w-full text-left px-4 py-2 hover:bg-slate-50 text-slate-700 font-medium flex items-center">
+                  <i class="fa-solid fa-folder-plus text-redgov-600 mr-2.5"></i> Tạo Cuộc Họp Mới
+                </button>
+                <button onclick="switchTab('adminManage')" id="btnMenuAdminDocs" class="w-full text-left px-4 py-2 hover:bg-slate-50 text-slate-700 font-medium flex items-center">
+                  <i class="fa-solid fa-file-arrow-up text-amber-600 mr-2.5"></i> Đưa Tài Liệu Lên Cuộc Họp
+                </button>
+                <button onclick="switchTab('userManageTab')" id="btnMenuUserManage" class="w-full text-left px-4 py-2 hover:bg-slate-50 text-slate-700 font-medium flex items-center">
+                  <i class="fa-solid fa-users-gear text-blue-600 mr-2.5"></i> Phân Quyền Cán Bộ (Admin)
+                </button>
+                <div class="border-t border-slate-100 my-1"></div>
+                <button onclick="returnToPortal()" class="w-full text-left px-4 py-2 hover:bg-red-50 text-red-600 font-semibold flex items-center">
+                  <i class="fa-solid fa-arrow-right-from-bracket mr-2.5"></i> Thoát ra Cổng đăng nhập
+                </button>
+              </div>
+            </div>
+
+          </div>
+
+        </div>
+      </div>
+    </header>
+
+    <!-- ==================== THANH CHỌN PHÒNG HỌP & TẠO PHÒNG MỚI ==================== -->
+    <section class="bg-slate-900 text-white px-3 sm:px-6 lg:px-8 py-2.5 border-b border-slate-800">
+      <div class="max-w-7xl mx-auto flex flex-col sm:flex-row sm:items-center justify-between gap-2.5">
+        
+        <!-- Bộ chọn Cuộc Họp -->
+        <div class="flex items-center space-x-2">
+          <span class="text-xs text-slate-400 font-medium whitespace-nowrap">
+            <i class="fa-regular fa-folder-open text-goldgov-400 mr-1"></i> Tệp cuộc họp:
+          </span>
+          <select id="meetingSelector" onchange="changeActiveMeeting(this.value)" class="bg-slate-800 text-white text-xs sm:text-sm font-semibold rounded-xl px-3 py-1.5 border border-slate-700 focus:outline-none focus:ring-2 focus:ring-redgov-500 max-w-[260px] sm:max-w-md lg:max-w-lg truncate">
+            <!-- Rendered dynamically -->
+          </select>
+        </div>
+
+        <!-- Nút thao tác nhanh phòng họp -->
+        <div class="flex items-center space-x-2 self-end sm:self-auto">
+          <button onclick="openCreateMeetingModal()" id="btnQuickCreateMeeting" class="px-3 py-1.5 bg-redgov-600 hover:bg-redgov-700 text-white text-xs font-bold rounded-xl shadow transition flex items-center">
+            <i class="fa-solid fa-plus mr-1"></i> Tạo cuộc họp mới
+          </button>
+          <button onclick="openQRModal()" class="px-3 py-1.5 bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs font-semibold rounded-xl border border-slate-700 transition flex items-center">
+            <i class="fa-solid fa-qrcode mr-1 text-goldgov-400"></i> QR Đại biểu
+          </button>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ==================== BANNER ĐẠI HỘI / HỘI NGHỊ ==================== -->
+    <section id="eventBanner" class="relative overflow-hidden bg-gradient-to-r from-redgov-800 via-redgov-700 to-redgov-900 text-white shadow-md transition-all duration-300">
+      <div class="absolute inset-0 opacity-10 pointer-events-none bg-[radial-gradient(#fff_1px,transparent_1px)] [background-size:16px_16px]"></div>
+      
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-5 sm:py-7 relative z-10">
+        <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
+          
+          <div class="space-y-2 max-w-3xl">
+            <div class="inline-flex items-center space-x-2 bg-black/25 backdrop-blur-sm px-3 py-1 rounded-full text-xs font-semibold text-goldgov-400 border border-white/10">
+              <i class="fa-solid fa-star animate-pulse text-goldgov-400"></i>
+              <span id="bannerSlogan">Đoàn kết - Dân chủ - Kỷ cương - Đổi mới - Phát triển</span>
+            </div>
+
+            <h2 id="bannerTitle" class="text-xl sm:text-2xl lg:text-3xl font-extrabold tracking-tight text-white leading-snug drop-shadow-sm">
+              KỲ HỌP THỨ MƯỜI MỘT - HĐND XÃ MƯỜNG LẦM KHÓA XXI
+            </h2>
+
+            <div class="flex flex-wrap items-center gap-x-4 gap-y-1 text-xs sm:text-sm text-red-100/90 pt-1">
+              <div class="flex items-center">
+                <i class="fa-regular fa-calendar-days mr-1.5 text-goldgov-400"></i>
+                <span id="bannerDateTime">18 - 19 Tháng 11, 2026</span>
+              </div>
+              <div class="flex items-center">
+                <i class="fa-solid fa-location-dot mr-1.5 text-goldgov-400"></i>
+                <span id="bannerLocation">Hội trường tầng 2 - Trụ sở HĐND & UBND Xã Mường Lầm</span>
+              </div>
+              <div class="flex items-center">
+                <i class="fa-solid fa-users mr-1.5 text-goldgov-400"></i>
+                <span id="bannerDelegateCount">25 Đại biểu HĐND & Khách mời</span>
+              </div>
+              <div class="flex items-center">
+                <i class="fa-solid fa-user-shield mr-1.5 text-goldgov-400"></i>
+                <span id="bannerCreatedBy">Người tạo: Văn phòng HĐND-UBND Xã</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="flex flex-wrap items-center gap-2 self-start md:self-center">
+            <button onclick="downloadAllDocsZip()" class="px-3.5 py-2 rounded-lg bg-white/10 hover:bg-white/20 text-white text-xs sm:text-sm font-semibold border border-white/20 backdrop-blur-sm transition flex items-center">
+              <i class="fa-solid fa-download mr-1.5 text-goldgov-400"></i> Tải Trọn Bộ File
+            </button>
+            <button onclick="openSeatModal()" class="px-3.5 py-2 rounded-lg bg-goldgov-500 hover:bg-goldgov-600 text-slate-950 text-xs sm:text-sm font-bold shadow-md transition flex items-center">
+              <i class="fa-solid fa-map-location-dot mr-1.5"></i> Sơ Đồ Chỗ Ngồi
+            </button>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== MENU TAB ĐIỀU HƯỚNG CHÍNH ==================== -->
+    <div class="bg-white border-b border-slate-200 sticky top-16 sm:top-20 z-30 shadow-sm">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex space-x-1 sm:space-x-8 overflow-x-auto custom-scroll-hidden py-1">
+          <button id="tabBtnDocs" onclick="switchTab('documents')" class="py-3 px-3 border-b-2 border-redgov-600 text-redgov-700 font-bold text-xs sm:text-sm flex items-center whitespace-nowrap">
+            <i class="fa-solid fa-folder-open mr-2 text-base"></i> Kho Tài Liệu Số (<span id="totalDocsCount">0</span>)
+          </button>
+          <button id="tabBtnAgenda" onclick="switchTab('agenda')" class="py-3 px-3 border-b-2 border-transparent text-slate-600 hover:text-slate-900 font-medium text-xs sm:text-sm flex items-center whitespace-nowrap">
+            <i class="fa-regular fa-clock mr-2 text-base"></i> Chương Trình Kỳ Họp
+          </button>
+          <button id="tabBtnNotes" onclick="switchTab('notes')" class="py-3 px-3 border-b-2 border-transparent text-slate-600 hover:text-slate-900 font-medium text-xs sm:text-sm flex items-center whitespace-nowrap">
+            <i class="fa-regular fa-pen-to-square mr-2 text-base"></i> Sổ Tay Ghi Chép Đại Biểu
+          </button>
+          
+          <!-- Tab Dành cho Ban Tổ Chức (Admin & Thư ký) -->
+          <button id="tabBtnAdmin" onclick="switchTab('adminManage')" class="py-3 px-3 border-b-2 border-transparent text-amber-600 hover:text-amber-800 font-semibold text-xs sm:text-sm hidden items-center whitespace-nowrap">
+            <i class="fa-solid fa-cloud-arrow-up mr-2 text-base"></i> Đưa Tài Liệu Lên
+          </button>
+
+          <!-- Tab Phân Quyền Cán Bộ (Chỉ Admin thấy) -->
+          <button id="tabBtnUsers" onclick="switchTab('userManageTab')" class="py-3 px-3 border-b-2 border-transparent text-blue-600 hover:text-blue-800 font-semibold text-xs sm:text-sm hidden items-center whitespace-nowrap">
+            <i class="fa-solid fa-users-gear mr-2 text-base"></i> Phân Quyền Cán Bộ
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ==================== MAIN CONTENT CONTAINER ==================== -->
+    <main class="flex-1 max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 py-6 w-full">
+
+      <!-- ==================== TAB 1: KHO TÀI LIỆU ĐẠI BIỂU ==================== -->
+      <div id="tabContentDocs" class="space-y-6">
+
+        <div class="bg-white p-3 sm:p-4 rounded-2xl shadow-sm border border-slate-200/80 space-y-3">
+          <div class="flex flex-col sm:flex-row gap-3 items-stretch sm:items-center justify-between">
+            
+            <div class="relative flex-1">
+              <i class="fa-solid fa-magnifying-glass absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400 text-sm"></i>
+              <input type="text" id="searchInput" oninput="filterDocuments()" placeholder="Tìm kiếm nhanh nghị quyết, báo cáo, tờ trình của xã Mường Lầm..." class="w-full pl-10 pr-10 py-2 sm:py-2.5 text-xs sm:text-sm rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-redgov-500 focus:border-transparent bg-slate-50/50">
+              <button id="clearSearchBtn" onclick="clearSearch()" class="hidden absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600">
+                <i class="fa-solid fa-circle-xmark"></i>
+              </button>
+            </div>
+
+            <div class="flex items-center space-x-2">
+              <select id="sessionFilter" onchange="filterDocuments()" class="px-3 py-2 text-xs sm:text-sm rounded-xl border border-slate-200 bg-slate-50 text-slate-700 focus:ring-2 focus:ring-redgov-500 font-medium">
+                <option value="all">Tất cả các phiên</option>
+                <option value="Phiên trù bị">Phiên trù bị</option>
+                <option value="Phiên chính thức" selected>Phiên chính thức</option>
+                <option value="Phiên bế mạc">Phiên bế mạc</option>
+              </select>
+
+              <div class="flex border border-slate-200 rounded-xl overflow-hidden p-0.5 bg-slate-100">
+                <button onclick="setViewMode('grid')" id="viewModeGrid" class="p-1.5 sm:px-2.5 text-xs font-semibold rounded-lg bg-white shadow-sm text-slate-800">
+                  <i class="fa-solid fa-grip"></i>
+                </button>
+                <button onclick="setViewMode('list')" id="viewModeList" class="p-1.5 sm:px-2.5 text-xs font-medium rounded-lg text-slate-500 hover:text-slate-800">
+                  <i class="fa-solid fa-list-ul"></i>
+                </button>
+              </div>
+            </div>
+
+          </div>
+
+          <div class="flex items-center space-x-2 overflow-x-auto custom-scroll-hidden pt-1 pb-0.5 text-xs font-medium" id="categoryPillContainer">
+            <!-- Rendered dynamically -->
+          </div>
+        </div>
+
+        <!-- Khu vực Ghim tài liệu biểu quyết -->
+        <div id="pinnedDocsSection" class="hidden space-y-3">
+          <div class="flex items-center space-x-2 text-redgov-700 font-bold text-sm">
+            <i class="fa-solid fa-thumbtack fa-rotate-by" style="--fa-rotate-angle: 45deg;"></i>
+            <span>VĂN KIỆN TRỌNG TÂM & NGHỊ QUYẾT BIỂU QUYẾT</span>
+          </div>
+          <div id="pinnedDocsGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
+            <!-- Rendered dynamically -->
+          </div>
+        </div>
+
+        <!-- Danh sách tài liệu chính -->
+        <div>
+          <div class="flex items-center justify-between mb-3">
+            <h3 class="text-sm sm:text-base font-bold text-slate-800 flex items-center">
+              <span>Danh Sách Tài Liệu Cuộc Họp</span>
+              <span id="filteredCountBadge" class="ml-2 text-xs font-semibold px-2 py-0.5 rounded-full bg-slate-200 text-slate-700">0</span>
+            </h3>
+            <span class="text-xs text-slate-400">Đại biểu chạm vào tài liệu để mở đọc trực tiếp</span>
+          </div>
+
+          <div id="documentsContainer" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+            <!-- Rendered by JS -->
+          </div>
+
+          <div id="emptyDocsState" class="hidden py-16 text-center bg-white rounded-2xl border border-slate-200 shadow-sm">
+            <div class="w-16 h-16 rounded-full bg-slate-100 text-slate-400 flex items-center justify-center mx-auto text-2xl mb-3">
+              <i class="fa-solid fa-folder-open"></i>
+            </div>
+            <p class="text-base font-bold text-slate-700">Chưa có tài liệu nào trong cuộc họp này</p>
+            <p class="text-xs text-slate-400 max-w-sm mx-auto mt-1">Đăng nhập tài khoản Thư ký hoặc Ban Tổ chức để tải tệp tài liệu lên.</p>
+            <div class="mt-4 flex justify-center space-x-2">
+              <button onclick="resetFilters()" class="px-4 py-2 bg-slate-200 text-slate-700 rounded-xl text-xs font-semibold hover:bg-slate-300 transition">
+                Đặt lại bộ lọc
+              </button>
+              <button onclick="returnToPortal()" class="px-4 py-2 bg-redgov-600 text-white rounded-xl text-xs font-bold hover:bg-redgov-700 transition">
+                Đăng nhập đưa tài liệu lên
+              </button>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- ==================== TAB 2: CHƯƠNG TRÌNH LÀM VIỆC ==================== -->
+      <div id="tabContentAgenda" class="hidden space-y-6">
+        <div class="bg-white p-4 sm:p-6 rounded-2xl border border-slate-200 shadow-sm">
+          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-4 border-b border-slate-100">
+            <div>
+              <h3 class="text-lg font-bold text-slate-900">Chương Trình & Kịch Bản Làm Việc</h3>
+              <p class="text-xs text-slate-500">Tiến độ chi tiết từng phiên họp của xã Mường Lầm</p>
+            </div>
+            <div class="inline-flex rounded-xl bg-slate-100 p-1 text-xs font-semibold">
+              <button onclick="filterAgendaSession('Phiên trù bị')" class="px-3 py-1.5 rounded-lg text-slate-600 hover:text-slate-900 agenda-filter-btn">Phiên Trù Bị</button>
+              <button onclick="filterAgendaSession('Phiên chính thức')" class="px-3 py-1.5 rounded-lg bg-white shadow-sm text-redgov-700 agenda-filter-btn font-bold">Phiên Chính Thức</button>
+              <button onclick="filterAgendaSession('Phiên bế mạc')" class="px-3 py-1.5 rounded-lg text-slate-600 hover:text-slate-900 agenda-filter-btn">Phiên Bế Mạc</button>
+            </div>
+          </div>
+
+          <div class="mt-6 space-y-4" id="agendaTimelineList">
+            <!-- Rendered dynamically -->
+          </div>
+        </div>
+      </div>
+
+      <!-- ==================== TAB 3: SỔ TAY GHI CHÉP ĐẠI BIỂU ==================== -->
+      <div id="tabContentNotes" class="hidden space-y-4">
+        <div class="bg-white p-4 sm:p-6 rounded-2xl border border-slate-200 shadow-sm">
+          <div class="flex items-center justify-between pb-4 border-b border-slate-100">
+            <div>
+              <h3 class="text-lg font-bold text-slate-900">Sổ Tay Ghi Chép Đại Biểu</h3>
+              <p class="text-xs text-slate-500">Ghi lại ý kiến phát biểu, tham luận và nội dung cần biểu quyết. Tự động lưu trên điện thoại/máy tính của bạn.</p>
+            </div>
+            <button onclick="saveNotes()" class="px-4 py-2 bg-redgov-600 hover:bg-redgov-700 text-white rounded-xl text-xs font-bold shadow transition flex items-center">
+              <i class="fa-solid fa-floppy-disk mr-1.5"></i> Lưu ghi chép
+            </button>
+          </div>
+
+          <div class="pt-4">
+            <textarea id="delegateNotesArea" rows="14" placeholder="Đại biểu nhập ghi chú ý kiến, nội dung phát biểu, biên bản thảo luận tại kỳ họp..." class="w-full p-4 rounded-xl border border-slate-200 bg-slate-50/50 text-slate-800 text-sm focus:ring-2 focus:ring-redgov-500 focus:outline-none"></textarea>
+          </div>
+          <div class="flex justify-between items-center text-xs text-slate-400 pt-2">
+            <span id="noteSaveStatus"><i class="fa-solid fa-check text-emerald-500 mr-1"></i> Dữ liệu tự động lưu</span>
+            <button onclick="exportNotesTxt()" class="hover:underline text-slate-600">
+              <i class="fa-solid fa-file-export mr-1"></i> Xuất file ghi chép (.txt)
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- ==================== TAB 4: BAN TỔ CHỨC / THƯ KÝ TẢI FILE ==================== -->
+      <div id="tabContentAdmin" class="hidden space-y-6">
+        
+        <div class="bg-gradient-to-r from-amber-500 to-amber-600 text-white p-4 rounded-2xl shadow-sm flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+          <div class="flex items-center space-x-3">
+            <div class="w-10 h-10 rounded-xl bg-white/20 flex items-center justify-center text-xl">
+              <i class="fa-solid fa-folder-open"></i>
+            </div>
+            <div>
+              <h4 class="font-bold text-base flex items-center">
+                <span>Đưa Tài Liệu Lên: </span>
+                <span id="adminActiveMeetingName" class="ml-1 underline font-black"></span>
+              </h4>
+              <p class="text-xs text-amber-100">Đang thao tác với quyền: <b id="adminActiveRoleName">Thư ký xã Mường Lầm</b>.</p>
+            </div>
+          </div>
+          <div class="flex items-center space-x-2">
+            <button onclick="openCreateMeetingModal()" class="px-3 py-1.5 rounded-lg bg-white text-amber-900 font-bold text-xs hover:bg-amber-50 transition shadow-sm">
+              <i class="fa-solid fa-plus mr-1"></i> Tạo cuộc họp mới
+            </button>
+            <button onclick="openQRModal()" class="px-3 py-1.5 rounded-lg bg-black/20 text-white font-bold text-xs hover:bg-black/30 transition">
+              <i class="fa-solid fa-qrcode mr-1"></i> Xuất mã QR
+            </button>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+
+          <!-- Form Tải File Lên -->
+          <div class="lg:col-span-2 space-y-6">
+            <div class="bg-white p-5 sm:p-6 rounded-2xl border border-slate-200 shadow-sm space-y-4">
+              <div class="flex items-center justify-between border-b border-slate-100 pb-3">
+                <h4 class="font-bold text-slate-800 text-base flex items-center">
+                  <i class="fa-solid fa-cloud-arrow-up text-redgov-600 mr-2"></i> Tải Tài Liệu Lên Tệp Cuộc Họp Này
+                </h4>
+                <span class="text-xs text-slate-400">PDF, Word, Excel, PowerPoint, Ảnh</span>
+              </div>
+
+              <div id="dropZone" onclick="document.getElementById('fileUploadInput').click()" class="border-2 border-dashed border-redgov-300 hover:border-redgov-600 hover:bg-redgov-50/40 transition-all rounded-2xl p-6 text-center cursor-pointer group bg-slate-50/50">
+                <input type="file" id="fileUploadInput" class="hidden" multiple onchange="handleFileSelect(event)">
+                <div class="w-14 h-14 rounded-full bg-redgov-100 text-redgov-600 flex items-center justify-center mx-auto text-2xl group-hover:scale-110 transition duration-200">
+                  <i class="fa-solid fa-file-arrow-up"></i>
+                </div>
+                <p class="font-bold text-slate-800 text-sm mt-3">Nhấp để chọn tệp tài liệu hoặc kéo thả tệp vào đây</p>
+                <p class="text-xs text-slate-400 mt-1">Đại biểu xã Mường Lầm quét mã QR để mở đọc trực tiếp trên điện thoại</p>
+              </div>
+
+              <!-- Danh sách file chuẩn bị lưu -->
+              <div id="stagedFilesContainer" class="hidden space-y-3 pt-2">
+                <h5 class="text-xs font-bold text-slate-600 uppercase tracking-wider">Tệp đang chuẩn bị đưa lên:</h5>
+                <div id="stagedFilesList" class="space-y-2"></div>
+
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 p-3 bg-slate-50 rounded-xl border border-slate-200">
+                  <div>
+                    <label class="block text-xs font-bold text-slate-700 mb-1">Danh mục tài liệu:</label>
+                    <select id="stagedCategory" class="w-full text-xs p-2 rounded-lg border border-slate-200 bg-white">
+                      <option value="Chương trình - Kịch bản">Chương trình - Kịch bản</option>
+                      <option value="Văn kiện chính" selected>Văn kiện chính</option>
+                      <option value="Báo cáo chính trị">Báo cáo chính trị</option>
+                      <option value="Nghị quyết - Biên bản">Nghị quyết - Biên bản</option>
+                      <option value="Tham luận - Đóng góp ý kiến">Tham luận - Đóng góp ý kiến</option>
+                      <option value="Danh sách đại biểu - Nhân sự">Danh sách đại biểu - Nhân sự</option>
+                      <option value="Tài liệu tham khảo khác">Tài liệu tham khảo khác</option>
+                    </select>
+                  </div>
+                  <div>
+                    <label class="block text-xs font-bold text-slate-700 mb-1">Thuộc Phiên họp:</label>
+                    <select id="stagedSession" class="w-full text-xs p-2 rounded-lg border border-slate-200 bg-white">
+                      <option value="Phiên trù bị">Phiên trù bị</option>
+                      <option value="Phiên chính thức" selected>Phiên chính thức</option>
+                      <option value="Phiên bế mạc">Phiên bế mạc</option>
+                    </select>
+                  </div>
+                  <div class="sm:col-span-2 flex items-center space-x-2 pt-1">
+                    <input type="checkbox" id="stagedIsPinned" class="rounded text-redgov-600 focus:ring-redgov-500">
+                    <label for="stagedIsPinned" class="text-xs font-semibold text-slate-700 cursor-pointer">
+                      Ghim lên đầu trang (Tài liệu trọng tâm / Lấy ý kiến biểu quyết)
+                    </label>
+                  </div>
+                </div>
+
+                <div class="flex justify-end space-x-2 pt-2">
+                  <button onclick="cancelStagedFiles()" class="px-4 py-2 bg-slate-200 hover:bg-slate-300 text-slate-700 rounded-xl text-xs font-bold transition">
+                    Hủy bỏ
+                  </button>
+                  <button onclick="saveStagedFiles()" class="px-5 py-2 bg-redgov-600 hover:bg-redgov-700 text-white rounded-xl text-xs font-bold shadow-md transition flex items-center">
+                    <i class="fa-solid fa-check mr-1.5"></i> Hoàn tất đưa tài liệu lên
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            <!-- Bảng tài liệu đã tải lên -->
+            <div class="bg-white p-5 sm:p-6 rounded-2xl border border-slate-200 shadow-sm space-y-4">
+              <div class="flex items-center justify-between border-b border-slate-100 pb-3">
+                <h4 class="font-bold text-slate-800 text-base">Tài Liệu Trong Cuộc Họp Này (<span id="adminDocsCount">0</span>)</h4>
+                <button onclick="confirmClearAllDocs()" class="text-xs text-red-600 hover:text-red-700 font-medium hover:underline">
+                  <i class="fa-regular fa-trash-can mr-1"></i> Xóa tất cả tài liệu phòng này
+                </button>
+              </div>
+
+              <div class="overflow-x-auto">
+                <table class="w-full text-left text-xs text-slate-600">
+                  <thead class="bg-slate-50 text-slate-700 uppercase font-bold text-[11px] border-y border-slate-200">
+                    <tr>
+                      <th class="py-2.5 px-3">Tên tài liệu</th>
+                      <th class="py-2.5 px-3">Danh mục</th>
+                      <th class="py-2.5 px-3">Phiên</th>
+                      <th class="py-2.5 px-3">Dung lượng</th>
+                      <th class="py-2.5 px-3 text-right">Thao tác</th>
+                    </tr>
+                  </thead>
+                  <tbody id="adminDocsTableBody" class="divide-y divide-slate-100">
+                    <!-- Rendered dynamically -->
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+
+          <!-- Cột thông tin cuộc họp & Xuất QR -->
+          <div class="space-y-6">
+            <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm space-y-4">
+              <h4 class="font-bold text-slate-800 text-sm border-b border-slate-100 pb-2 flex items-center">
+                <i class="fa-solid fa-pen-to-square text-redgov-600 mr-2"></i> Thông Tin Cuộc Họp
+              </h4>
+
+              <div class="space-y-3 text-xs">
+                <div>
+                  <label class="block font-bold text-slate-700 mb-1">Loại sự kiện:</label>
+                  <select id="cfgEventType" class="w-full p-2 border border-slate-200 rounded-lg">
+                    <option value="Kỳ họp HĐND">Kỳ họp HĐND</option>
+                    <option value="Hội nghị UBND">Hội nghị UBND</option>
+                    <option value="Họp Đảng ủy">Họp Đảng ủy Xã</option>
+                    <option value="Đại hội Đoàn thể">Đại hội Đoàn thể</option>
+                    <option value="Giao ban Bản">Họp Giao ban Bản</option>
+                  </select>
+                </div>
+
+                <div>
+                  <label class="block font-bold text-slate-700 mb-1">Tên cuộc họp / Kỳ họp:</label>
+                  <input type="text" id="cfgTitle" class="w-full p-2 border border-slate-200 rounded-lg font-medium">
+                </div>
+
+                <div>
+                  <label class="block font-bold text-slate-700 mb-1">Khẩu hiệu / Chủ đề:</label>
+                  <input type="text" id="cfgSlogan" class="w-full p-2 border border-slate-200 rounded-lg">
+                </div>
+
+                <div class="grid grid-cols-2 gap-2">
+                  <div>
+                    <label class="block font-bold text-slate-700 mb-1">Thời gian:</label>
+                    <input type="text" id="cfgDateTime" class="w-full p-2 border border-slate-200 rounded-lg">
+                  </div>
+                  <div>
+                    <label class="block font-bold text-slate-700 mb-1">Số đại biểu:</label>
+                    <input type="text" id="cfgDelegates" class="w-full p-2 border border-slate-200 rounded-lg">
+                  </div>
+                </div>
+
+                <div>
+                  <label class="block font-bold text-slate-700 mb-1">Địa điểm tổ chức:</label>
+                  <input type="text" id="cfgLocation" class="w-full p-2 border border-slate-200 rounded-lg">
+                </div>
+
+                <button onclick="saveMeetingConfig()" class="w-full py-2.5 bg-slate-900 hover:bg-black text-white font-bold rounded-xl transition shadow">
+                  Cập nhật thông tin cuộc họp
+                </button>
+              </div>
+            </div>
+
+            <!-- Card Xuất Mã QR Nhanh -->
+            <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm space-y-3 text-center">
+              <h4 class="font-bold text-slate-800 text-sm flex items-center justify-center">
+                <i class="fa-solid fa-qrcode text-redgov-600 mr-2"></i> Mã QR Cuộc Họp Này
+              </h4>
+              <p class="text-xs text-slate-400">Đại biểu xã Mường Lầm quét mã này để vào thẳng tài liệu cuộc họp.</p>
+
+              <div class="p-4 bg-slate-50 border border-slate-200 rounded-2xl flex flex-col items-center justify-center">
+                <div id="adminQrCodePreview" class="bg-white p-3 rounded-xl shadow-sm border border-slate-100"></div>
+                <p class="text-[11px] font-semibold text-slate-600 mt-2" id="qrMeetingNameLabel">Kỳ họp HĐND</p>
+              </div>
+
+              <div class="space-y-2">
+                <button onclick="openQRModal()" class="w-full py-2 bg-redgov-600 hover:bg-redgov-700 text-white font-bold text-xs rounded-xl shadow transition flex items-center justify-center">
+                  <i class="fa-solid fa-arrow-up-right-from-square mr-1.5"></i> Xuất & Tải Ảnh Mã QR
+                </button>
+                <button onclick="printDelegateQRCard()" class="w-full py-2 bg-slate-100 hover:bg-slate-200 text-slate-800 font-bold text-xs rounded-xl transition flex items-center justify-center">
+                  <i class="fa-solid fa-print mr-1.5"></i> In Biển Để Bàn / Standee A4
+                </button>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- ==================== TAB 5: PHÂN QUYỀN CÁN BỘ (CHỈ ADMIN) ==================== -->
+      <div id="tabContentUsers" class="hidden space-y-6">
+        <div class="bg-gradient-to-r from-blue-700 to-indigo-800 text-white p-5 rounded-2xl shadow-sm flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+          <div class="flex items-center space-x-3">
+            <div class="w-12 h-12 rounded-xl bg-white/20 flex items-center justify-center text-2xl">
+              <i class="fa-solid fa-users-gear"></i>
+            </div>
+            <div>
+              <h3 class="text-lg font-bold">Phân Quyền Cán Bộ Xã Mường Lầm</h3>
+              <p class="text-xs text-blue-100">Cấp tài khoản cho công chức văn phòng, tư pháp, văn hóa để tự tạo cuộc họp và tải tài liệu lên.</p>
+            </div>
+          </div>
+
+          <button onclick="openAddUserModal()" class="px-4 py-2 bg-white text-blue-900 font-bold text-xs rounded-xl hover:bg-blue-50 transition shadow flex items-center">
+            <i class="fa-solid fa-user-plus mr-1.5"></i> Thêm Tài Khoản Mới
+          </button>
+        </div>
+
+        <div class="bg-white p-5 sm:p-6 rounded-2xl border border-slate-200 shadow-sm space-y-4">
+          <div class="flex items-center justify-between border-b border-slate-100 pb-3">
+            <h4 class="font-bold text-slate-800 text-base">Danh Sách Tài Khoản Trong Hệ Thống (<span id="usersCountBadge">0</span>)</h4>
+            <span class="text-xs text-slate-400">Chỉ Quản trị viên tối cao (Admin) mới có quyền chỉnh sửa mục này</span>
+          </div>
+
+          <div class="overflow-x-auto">
+            <table class="w-full text-left text-xs text-slate-600">
+              <thead class="bg-slate-50 text-slate-700 uppercase font-bold text-[11px] border-y border-slate-200">
+                <tr>
+                  <th class="py-3 px-3">Tên đăng nhập</th>
+                  <th class="py-3 px-3">Họ và tên cán bộ</th>
+                  <th class="py-3 px-3">Chức danh / Đơn vị</th>
+                  <th class="py-3 px-3">Vai trò</th>
+                  <th class="py-3 px-3">Quyền hạn</th>
+                  <th class="py-3 px-3 text-right">Thao tác</th>
+                </tr>
+              </thead>
+              <tbody id="userTableBody" class="divide-y divide-slate-100">
+                <!-- Rendered dynamically -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+    </main>
+
+    <!-- ==================== FOOTER ==================== -->
+    <footer class="bg-white border-t border-slate-200 mt-auto py-5 text-center text-xs text-slate-500">
+      <div class="max-w-7xl mx-auto px-4 space-y-1">
+        <p class="font-bold text-slate-800 flex items-center justify-center">
+          <i class="fa-solid fa-star text-goldgov-500 mr-1.5"></i> PHÒNG HỌP KHÔNG GIẤY XÃ MƯỜNG LẦM
+        </p>
+        <p class="font-semibold text-slate-600">XÃ MƯỜNG LẦM - TỈNH SƠN LA</p>
+        <p class="text-[11px] text-slate-400">Đại biểu quét mã QR bằng camera điện thoại để truy cập tức thì.</p>
+      </div>
+    </footer>
+
+  </div>
+
+  <!-- ==================== MODAL: XUẤT MÃ QR PHÒNG HỌP ==================== -->
+  <div id="qrModal" class="fixed inset-0 z-50 bg-black/70 backdrop-blur-sm hidden flex items-center justify-center p-3 sm:p-4">
+    <div class="bg-white rounded-3xl shadow-2xl max-w-md w-full p-6 text-center space-y-4 border border-slate-200 animate-in fade-in zoom-in-95 duration-150">
+      
+      <div class="flex items-center justify-between border-b border-slate-100 pb-3">
+        <div class="flex items-center space-x-2 text-left">
+          <div class="w-9 h-9 rounded-xl bg-red-100 text-red-600 flex items-center justify-center text-lg">
+            <i class="fa-solid fa-qrcode"></i>
+          </div>
+          <div>
+            <h3 class="text-sm font-bold text-slate-900">Mã QR Đại Biểu Xã Mường Lầm</h3>
+            <p class="text-[11px] text-slate-400 line-clamp-1" id="modalQrMeetingName">Kỳ họp HĐND</p>
+          </div>
+        </div>
+        <button onclick="closeQRModal()" class="text-slate-400 hover:text-slate-700">
+          <i class="fa-solid fa-xmark text-lg"></i>
+        </button>
+      </div>
+
+      <div class="p-5 bg-gradient-to-b from-slate-50 to-red-50/30 rounded-2xl border border-red-100 flex flex-col items-center justify-center">
+        <div id="delegateModalQrContainer" class="bg-white p-3 rounded-2xl shadow-md border border-slate-100"></div>
+        <p class="text-xs font-bold text-slate-800 mt-3">Quét bằng Camera điện thoại</p>
+        <p class="text-[11px] text-slate-500 mt-0.5">Vào thẳng tài liệu cuộc họp này mà không cần cài đặt app</p>
+      </div>
+
+      <div class="text-left space-y-1">
+        <label class="text-[11px] font-bold text-slate-600">Đường link trực tiếp cho Đại biểu:</label>
+        <div class="flex items-center space-x-1">
+          <input type="text" id="shareMeetingUrlInput" readonly class="w-full text-xs p-2 bg-slate-50 rounded-lg border border-slate-200 text-slate-600 select-all font-mono">
+          <button onclick="copyMeetingUrl()" class="px-3 py-2 bg-slate-200 hover:bg-slate-300 text-slate-800 rounded-lg text-xs font-bold whitespace-nowrap">
+            <i class="fa-solid fa-copy"></i>
+          </button>
+        </div>
+      </div>
+
+      <div class="grid grid-cols-2 gap-2 pt-2">
+        <button onclick="downloadQrImage()" class="w-full py-2.5 bg-slate-900 hover:bg-black text-white font-bold rounded-xl text-xs transition flex items-center justify-center shadow">
+          <i class="fa-solid fa-file-arrow-down mr-1.5"></i> Tải Ảnh QR (.PNG)
+        </button>
+        <button onclick="printDelegateQRCard()" class="w-full py-2.5 bg-redgov-600 hover:bg-redgov-700 text-white font-bold rounded-xl text-xs transition flex items-center justify-center shadow">
+          <i class="fa-solid fa-print mr-1.5"></i> In Biển Để Bàn A4
+        </button>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ==================== MODAL: TẠO CUỘC HỌP MỚI ==================== -->
+  <div id="createMeetingModal" class="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm hidden flex items-center justify-center p-4">
+    <div class="bg-white rounded-3xl shadow-2xl max-w-lg w-full p-6 space-y-4 border border-slate-200 animate-in fade-in zoom-in-95 duration-150">
+      
+      <div class="flex items-center justify-between border-b border-slate-100 pb-3">
+        <div class="flex items-center space-x-2">
+          <div class="w-9 h-9 rounded-xl bg-red-100 text-red-600 flex items-center justify-center text-lg">
+            <i class="fa-solid fa-folder-plus"></i>
+          </div>
+          <div>
+            <h3 class="text-base font-bold text-slate-900">Tạo Cuộc Họp / Kỳ Họp Mới</h3>
+            <p class="text-xs text-slate-400">Tạo phòng họp riêng biệt để đưa tài liệu và xuất mã QR</p>
+          </div>
+        </div>
+        <button onclick="closeCreateMeetingModal()" class="text-slate-400 hover:text-slate-700">
+          <i class="fa-solid fa-xmark text-lg"></i>
+        </button>
+      </div>
+
+      <div class="space-y-3 text-xs">
+        <div class="grid grid-cols-2 gap-2">
+          <div>
+            <label class="block font-bold text-slate-700 mb-1">Loại sự kiện:</label>
+            <select id="newMeetingType" class="w-full p-2.5 border border-slate-200 rounded-xl bg-white">
+              <option value="Kỳ họp HĐND" selected>Kỳ họp HĐND Xã</option>
+              <option value="Hội nghị UBND">Hội nghị UBND Xã</option>
+              <option value="Họp Đảng ủy">Họp BCH Đảng bộ Xã</option>
+              <option value="Giao ban Bản">Họp Giao ban Trưởng bản</option>
+              <option value="Đại hội Đoàn thể">Đại hội Đoàn thể</option>
+            </select>
+          </div>
+          <div>
+            <label class="block font-bold text-slate-700 mb-1">Theme màu sắc:</label>
+            <select id="newMeetingTheme" class="w-full p-2.5 border border-slate-200 rounded-xl bg-white">
+              <option value="red" selected>Đỏ truyền thống (HĐND/UBND/Đảng)</option>
+              <option value="blue">Xanh công nghệ (Giao ban/Số hóa)</option>
+            </select>
+          </div>
+        </div>
+
+        <div>
+          <label class="block font-bold text-slate-700 mb-1">Tên cuộc họp / Kỳ họp: *</label>
+          <input type="text" id="newMeetingTitle" placeholder="Ví dụ: KỲ HỌP THỨ MƯỜI HAI - HĐND XÃ MƯỜNG LẦM" class="w-full p-2.5 border border-slate-200 rounded-xl font-bold">
+        </div>
+
+        <div>
+          <label class="block font-bold text-slate-700 mb-1">Khẩu hiệu / Chủ đề:</label>
+          <input type="text" id="newMeetingSlogan" placeholder="Ví dụ: Đoàn kết - Dân chủ - Kỷ cương - Đổi mới - Phát triển" class="w-full p-2.5 border border-slate-200 rounded-xl">
+        </div>
+
+        <div class="grid grid-cols-2 gap-2">
+          <div>
+            <label class="block font-bold text-slate-700 mb-1">Thời gian tổ chức:</label>
+            <input type="text" id="newMeetingTime" placeholder="Ví dụ: 08:00, Ngày 20/11/2026" class="w-full p-2.5 border border-slate-200 rounded-xl">
+          </div>
+          <div>
+            <label class="block font-bold text-slate-700 mb-1">Số lượng đại biểu:</label>
+            <input type="text" id="newMeetingDelegates" placeholder="Ví dụ: 25 Đại biểu" class="w-full p-2.5 border border-slate-200 rounded-xl">
+          </div>
+        </div>
+
+        <div>
+          <label class="block font-bold text-slate-700 mb-1">Địa điểm tổ chức:</label>
+          <input type="text" id="newMeetingLocation" placeholder="Ví dụ: Hội trường tầng 2 - Trụ sở HĐND & UBND Xã Mường Lầm" class="w-full p-2.5 border border-slate-200 rounded-xl">
+        </div>
+
+        <div class="flex justify-end space-x-2 pt-2 border-t border-slate-100">
+          <button onclick="closeCreateMeetingModal()" class="px-4 py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold rounded-xl transition">
+            Hủy
+          </button>
+          <button onclick="submitNewMeeting()" class="px-5 py-2 bg-redgov-600 hover:bg-redgov-700 text-white font-bold rounded-xl transition shadow">
+            Tạo và chuyển đến cuộc họp
+          </button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ==================== MODAL: THÊM TÀI KHOẢN CÁN BỘ (CHỈ ADMIN) ==================== -->
+  <div id="addUserModal" class="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm hidden flex items-center justify-center p-4">
+    <div class="bg-white rounded-3xl shadow-2xl max-w-md w-full p-6 space-y-4 border border-slate-200 animate-in fade-in zoom-in-95 duration-150">
+      
+      <div class="flex items-center justify-between border-b border-slate-100 pb-3">
+        <div class="flex items-center space-x-2">
+          <div class="w-9 h-9 rounded-xl bg-blue-100 text-blue-600 flex items-center justify-center text-lg">
+            <i class="fa-solid fa-user-shield"></i>
+          </div>
+          <div>
+            <h3 class="text-base font-bold text-slate-900">Cấp Quyền Cán Bộ Xã Mường Lầm</h3>
+            <p class="text-xs text-slate-400">Tạo tài khoản để công chức xã tự tạo cuộc họp và đưa tài liệu lên</p>
+          </div>
+        </div>
+        <button onclick="closeAddUserModal()" class="text-slate-400 hover:text-slate-700">
+          <i class="fa-solid fa-xmark text-lg"></i>
+        </button>
+      </div>
+
+      <div class="space-y-3 text-xs">
+        <div>
+          <label class="block font-bold text-slate-700 mb-1">Tên đăng nhập (Username): *</label>
+          <input type="text" id="newUsername" placeholder="Ví dụ: thuky_tuphap, thuky_vanhoa" class="w-full p-2.5 border border-slate-200 rounded-xl">
+        </div>
+
+        <div>
+          <label class="block font-bold text-slate-700 mb-1">Mật khẩu khởi tạo: *</label>
+          <input type="password" id="newUserPass" placeholder="Nhập mật khẩu" value="123" class="w-full p-2.5 border border-slate-200 rounded-xl">
+        </div>
+
+        <div>
+          <label class="block font-bold text-slate-700 mb-1">Họ và tên cán bộ: *</label>
+          <input type="text" id="newUserFullName" placeholder="Ví dụ: Đ/c Lò Văn Cường" class="w-full p-2.5 border border-slate-200 rounded-xl font-medium">
+        </div>
+
+        <div>
+          <label class="block font-bold text-slate-700 mb-1">Chức danh / Bộ phận:</label>
+          <input type="text" id="newUserDept" placeholder="Ví dụ: Công chức Văn phòng - Thống kê" class="w-full p-2.5 border border-slate-200 rounded-xl">
+        </div>
+
+        <div>
+          <label class="block font-bold text-slate-700 mb-1">Vai trò & Phân quyền:</label>
+          <select id="newUserRole" class="w-full p-2.5 border border-slate-200 rounded-xl bg-white font-bold text-slate-800">
+            <option value="moderator" selected>Thư Ký / Người Tạo Họp (Được tạo cuộc họp & đưa tài liệu)</option>
+            <option value="admin">Quản Trị Viên Tối Cao (Admin toàn quyền hệ thống)</option>
+            <option value="delegate">Đại Biểu (Chỉ xem và ghi chú tài liệu)</option>
+          </select>
+        </div>
+
+        <div class="flex justify-end space-x-2 pt-2 border-t border-slate-100">
+          <button onclick="closeAddUserModal()" class="px-4 py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold rounded-xl transition">
+            Hủy
+          </button>
+          <button onclick="submitNewUser()" class="px-5 py-2 bg-blue-600 hover:bg-blue-700 text-white font-bold rounded-xl transition shadow">
+            Cấp tài khoản
+          </button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ==================== MODAL: XEM TÀI LIỆU TRỰC TIẾP ==================== -->
+  <div id="docViewerModal" class="fixed inset-0 z-50 bg-black/70 backdrop-blur-sm hidden flex items-center justify-center p-2 sm:p-4">
+    <div class="bg-white rounded-2xl shadow-2xl w-full max-w-5xl h-[92vh] flex flex-col overflow-hidden border border-slate-200 animate-in fade-in zoom-in-95 duration-200">
+      
+      <div class="px-4 py-3 bg-slate-900 text-white flex items-center justify-between border-b border-slate-800">
+        <div class="flex items-center space-x-3 overflow-hidden mr-3">
+          <div id="modalDocIcon" class="w-8 h-8 rounded-lg bg-red-600 flex items-center justify-center text-white shrink-0 text-sm">
+            <i class="fa-regular fa-file-pdf"></i>
+          </div>
+          <div class="overflow-hidden">
+            <div class="flex items-center space-x-2">
+              <h3 id="modalDocTitle" class="text-xs sm:text-sm font-bold truncate">Tên tài liệu.pdf</h3>
+              <span class="px-2 py-0.5 rounded-full bg-emerald-500/20 text-emerald-400 font-bold text-[10px] hidden sm:inline-flex items-center whitespace-nowrap">
+                <i class="fa-solid fa-eye mr-1"></i> Xem Trực Tuyến
+              </span>
+            </div>
+            <p id="modalDocMeta" class="text-[11px] text-slate-400 truncate">Văn kiện chính • 2.4 MB</p>
+          </div>
+        </div>
+
+        <div class="flex items-center space-x-1.5 shrink-0">
+          <a id="modalDownloadBtn" href="#" download class="px-2.5 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-xs font-semibold text-slate-300 hover:text-white transition flex items-center" title="Tải về máy nếu cần">
+            <i class="fa-solid fa-download mr-1"></i> <span class="hidden sm:inline">Tải về</span>
+          </a>
+          <button onclick="toggleDocFullscreen()" class="p-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-300 hover:text-white transition text-xs" title="Toàn màn hình">
+            <i class="fa-solid fa-expand"></i>
+          </button>
+          <button onclick="closeDocViewer()" class="p-1.5 rounded-lg bg-red-600 hover:bg-red-700 text-white transition text-xs" title="Đóng">
+            <i class="fa-solid fa-xmark text-sm px-1"></i>
+          </button>
+        </div>
+      </div>
+
+      <div class="flex-1 bg-slate-100 relative overflow-hidden flex flex-col items-center justify-center" id="modalViewerBody">
+        <!-- Trình đọc PDF.js / Word Mammoth / Excel SheetJS sẽ hiển thị trực tuyến tại đây -->
+      </div>
+
+      <div class="px-4 py-2 bg-white border-t border-slate-200 flex items-center justify-between text-xs text-slate-500">
+        <div class="flex items-center space-x-2">
+          <button onclick="toggleBookmarkCurrentDoc()" id="modalBookmarkBtn" class="hover:text-amber-600 font-medium">
+            <i class="fa-regular fa-star mr-1"></i> Đánh dấu quan trọng
+          </button>
+        </div>
+        <span class="text-emerald-700 font-semibold flex items-center">
+          <i class="fa-solid fa-cloud-check text-emerald-600 mr-1.5 text-sm"></i>
+          <span class="hidden sm:inline">Đang xem trực tuyến • </span>Không tốn bộ nhớ điện thoại
+        </span>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ==================== MODAL: SƠ ĐỒ CHỖ NGỒI ==================== -->
+  <div id="seatModal" class="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm hidden flex items-center justify-center p-4">
+    <div class="bg-white rounded-3xl shadow-2xl max-w-xl w-full p-6 space-y-4 border border-slate-200">
+      <div class="flex items-center justify-between border-b border-slate-100 pb-3">
+        <div class="flex items-center space-x-2">
+          <i class="fa-solid fa-map-location-dot text-redgov-600 text-lg"></i>
+          <h3 class="text-base font-bold text-slate-900">Sơ Đồ Chỗ Ngồi Hội Trường Xã Mường Lầm</h3>
+        </div>
+        <button onclick="closeSeatModal()" class="text-slate-400 hover:text-slate-700">
+          <i class="fa-solid fa-xmark text-lg"></i>
+        </button>
+      </div>
+
+      <div class="space-y-3 text-center">
+        <div class="bg-red-800 text-white font-bold py-2 rounded-xl text-xs tracking-wider shadow">
+          CHỦ TỌA KỲ HỌP / THƯ KÝ
+        </div>
+
+        <div class="py-2 text-[11px] font-semibold text-slate-400 uppercase tracking-widest">
+          --- LỐI ĐI CHÍNH HỘI TRƯỜNG ---
+        </div>
+
+        <div class="grid grid-cols-3 gap-2 text-xs">
+          <div class="p-3 bg-red-50 border border-red-200 rounded-xl">
+            <p class="font-bold text-red-900">DÃY BÊN TRÁI</p>
+            <p class="text-[10px] text-slate-500 mt-1">Đại biểu HĐND khối các Bản 1, 2, 3</p>
+            <span class="inline-block mt-2 px-2 py-0.5 bg-red-200 text-red-800 font-bold text-[10px] rounded">Hàng 1 - 5</span>
+          </div>
+
+          <div class="p-3 bg-amber-50 border border-amber-200 rounded-xl">
+            <p class="font-bold text-amber-900">DÃY GIỮA</p>
+            <p class="text-[10px] text-slate-500 mt-1">Lãnh đạo Đảng ủy, HĐND, UBND Xã & Đại biểu khách mời</p>
+            <span class="inline-block mt-2 px-2 py-0.5 bg-amber-200 text-amber-800 font-bold text-[10px] rounded">Hàng 1 - 5</span>
+          </div>
+
+          <div class="p-3 bg-blue-50 border border-blue-200 rounded-xl">
+            <p class="font-bold text-blue-900">DÃY BÊN PHẢI</p>
+            <p class="text-[10px] text-slate-500 mt-1">Đại biểu HĐND khối các Bản 4, 5, 6 & Khách mời</p>
+            <span class="inline-block mt-2 px-2 py-0.5 bg-blue-200 text-blue-800 font-bold text-[10px] rounded">Hàng 1 - 5</span>
+          </div>
+        </div>
+
+        <p class="text-xs text-slate-500 pt-2 italic">
+          * Đại biểu vui lòng đối chiếu số ghế ghi trên biển tên tại bàn họp.
+        </p>
+      </div>
+
+      <button onclick="closeSeatModal()" class="w-full py-2 bg-slate-900 text-white font-bold text-xs rounded-xl hover:bg-black transition">
+        Đã hiểu
+      </button>
+    </div>
+  </div>
+
+  <!-- ==================== KHU VỰC IN MÃ QR ĐỂ BÀN A4 ==================== -->
+  <div id="printArea" class="hidden">
+    <div style="padding: 35px; text-align: center; font-family: 'Be Vietnam Pro', sans-serif; border: 4px double #be123c; margin: 15px; background: #fff;">
+      <p style="font-size: 15px; font-weight: 900; color: #1e3a8a; text-transform: uppercase; letter-spacing: 1.5px;">
+        XÃ MƯỜNG LẦM - TỈNH SƠN LA
+      </p>
+      <p style="font-size: 16px; font-weight: 900; color: #be123c; margin-top: 5px; text-transform: uppercase;">
+        PHÒNG HỌP KHÔNG GIẤY
+      </p>
+      <h3 style="font-size: 15px; color: #111827; font-weight: bold; text-transform: uppercase; margin-top: 8px;" id="printEventType">
+        KỲ HỌP HĐND
+      </h3>
+      <h1 style="font-size: 23px; font-weight: 800; margin: 10px 0; color: #9f1239; line-height: 1.3;" id="printMeetingTitle">
+        Tên Cuộc Họp
+      </h1>
+      <p style="font-size: 13px; color: #4b5563; margin-bottom: 20px;" id="printDateTime">
+        Thời gian: 18 - 19/11/2026 | Địa điểm: Hội trường Xã Mường Lầm
+      </p>
+      
+      <div style="display: inline-block; padding: 18px; background: #fff; border: 2px solid #e5e7eb; border-radius: 20px; margin-bottom: 15px; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1);">
+        <div id="printQrCodeHolder" style="display: flex; justify-content: center;"></div>
+      </div>
+
+      <h2 style="font-size: 17px; font-weight: 800; color: #be123c; margin-top: 5px; text-transform: uppercase;">
+        QUÉT MÃ QR ĐỂ XEM VĂN KIỆN & TÀI LIỆU KỲ HỌP
+      </h2>
+      <p style="font-size: 12px; color: #4b5563; max-width: 520px; margin: 6px auto; line-height: 1.5;">
+        Kính đề nghị Quý Đại biểu dùng Camera điện thoại để quét mã QR phía trên để xem toàn bộ Nghị quyết, Báo cáo và Chương trình kỳ họp số hóa.
+      </p>
+      <div style="margin-top: 20px; font-size: 11px; color: #9ca3af; border-top: 1px solid #e5e7eb; padding-top: 10px;">
+        Hệ thống phòng họp không giấy tờ Xã Mường Lầm • Tiết kiệm - Tiện lợi - Hiện đại
+      </div>
+    </div>
+  </div>
+
+  <!-- ==================== JAVASCRIPT XỬ LÝ TOÀN BỘ ỨNG DỤNG ==================== -->
+  <script>
+    const DB_NAME = 'DaiHoiAppDB';
+    const DB_VERSION = 1;
+    const STORE_NAME = 'meeting_documents';
+
+    // Danh sách tài khoản mặc định xã Mường Lầm
+    const DEFAULT_USERS = [
+      { username: 'admin', password: '123', fullName: 'Quản Trị Viên Xã Mường Lầm', role: 'admin', department: 'UBND Xã Mường Lầm' },
+      { username: 'thuky_muonglam', password: '123', fullName: 'Đ/c Lò Văn Cường (Văn phòng)', role: 'moderator', department: 'Văn phòng HĐND & UBND Xã' },
+      { username: 'canbo_tuphap', password: '123', fullName: 'Đ/c Quàng Văn Minh (Tư pháp)', role: 'moderator', department: 'Ban Tư pháp - Xã Mường Lầm' }
+    ];
+
+    // Danh sách cuộc họp mẫu Xã Mường Lầm
+    const DEFAULT_MEETINGS = [
+      {
+        id: 'hop-hdnd-muonglam-k11',
+        type: 'Kỳ họp HĐND',
+        title: 'KỲ HỌP THỨ MƯỜI MỘT - HĐND XÃ MƯỜNG LẦM KHÓA XXI',
+        slogan: 'Đoàn kết - Dân chủ - Kỷ cương - Đổi mới - Phát triển',
+        dateTime: '18 - 19 Tháng 11, 2026',
+        location: 'Hội trường tầng 2 - Trụ sở HĐND & UBND Xã Mường Lầm',
+        delegates: '25 Đại biểu HĐND & Khách mời',
+        theme: 'red',
+        createdBy: 'thuky_muonglam'
+      },
+      {
+        id: 'hop-danguy-t11',
+        type: 'Họp Đảng ủy',
+        title: 'HỘI NGHỊ BAN CHẤP HÀNH ĐẢNG BỘ XÃ MƯỜNG LẦM THÁNG 11/2026',
+        slogan: 'Nâng cao năng lực lãnh đạo và sức chiến đấu của Đảng bộ',
+        dateTime: '25 Tháng 11, 2026 (08:00)',
+        location: 'Phòng họp số 1 - Đảng ủy Xã Mường Lầm',
+        delegates: '19 Đồng chí Đảng ủy viên',
+        theme: 'red',
+        createdBy: 'admin'
+      },
+      {
+        id: 'hop-giaoban-truongban',
+        type: 'Giao ban Bản',
+        title: 'HỘI NGHỊ GIAO BAN UBND XÃ MƯỜNG LẦM VỚI TRƯỞNG CÁC BẢN',
+        slogan: 'Quyết liệt triển khai các nhiệm vụ phát triển kinh tế - xã hội',
+        dateTime: '28 Tháng 11, 2026 (14:00)',
+        location: 'Hội trường UBND Xã Mường Lầm',
+        delegates: 'Trưởng các bản & Công chức chuyên môn',
+        theme: 'blue',
+        createdBy: 'thuky_muonglam'
+      }
+    ];
+
+    const CATEGORIES = [
+      'Tất cả',
+      'Chương trình - Kịch bản',
+      'Văn kiện chính',
+      'Báo cáo chính trị',
+      'Nghị quyết - Biên bản',
+      'Tham luận - Đóng góp ý kiến',
+      'Danh sách đại biểu - Nhân sự',
+      'Tài liệu tham khảo khác'
+    ];
+
+    const SAMPLE_AGENDA = [
+      { time: '07:30 - 08:00', title: 'Đón tiếp Đại biểu HĐND và đại biểu khách mời điểm danh số hóa', session: 'Phiên chính thức', status: 'done', desc: 'Kiểm tra tư cách đại biểu, quét mã QR nhận tài liệu kỳ họp.' },
+      { time: '08:00 - 08:30', title: 'Chào cờ, Tuyên bố lý do & Khai mạc Kỳ họp thứ mười một HĐND Xã Mường Lầm', session: 'Phiên chính thức', status: 'done', desc: 'Chủ tọa kỳ họp phát biểu khai mạc và thông qua chương trình làm việc.' },
+      { time: '08:30 - 09:30', title: 'UBND Xã báo cáo tình hình thực hiện kế hoạch phát triển KT-XH năm 2026', session: 'Phiên chính thức', status: 'current', desc: 'Chủ tịch UBND Xã trình bày báo cáo đánh giá kết quả thực hiện và phương hướng năm tới.' },
+      { time: '09:30 - 10:15', title: 'Đại biểu thảo luận tại tổ và phát biểu tham luận', session: 'Phiên chính thức', status: 'upcoming', desc: 'Thảo luận về các giải pháp xây dựng nông thôn mới, làm đường giao thông liên bản và an ninh trật tự.' },
+      { time: '10:15 - 11:30', title: 'Thông qua các Tờ trình và Biểu quyết Nghị quyết của HĐND Xã', session: 'Phiên chính thức', status: 'upcoming', desc: 'Đại biểu nghiên cứu dự thảo và tiến hành biểu quyết số hóa.' },
+      { time: '11:30 - 12:00', title: 'Chủ tọa phát biểu bế mạc Kỳ họp', session: 'Phiên chính thức', status: 'upcoming', desc: 'Bế mạc kỳ họp thứ mười một HĐND Xã Mường Lầm.' }
+    ];
+
+    // State ứng dụng
+    let usersList = [];
+    let currentUser = null; // null: chưa vào; nếu vào delegate thì role = 'delegate'; nếu login thì role = 'admin' / 'moderator'
+    let meetingsList = [];
+    let currentMeetingId = '';
+    let currentMeeting = null;
+    let allDocuments = [];
+    let activeCategory = 'Tất cả';
+    let currentViewMode = 'grid';
+    let stagedFiles = [];
+    let activeDocForModal = null;
+
+    /* =====================================================================
+       2. DATABASE INDEXEDDB
+       ===================================================================== */
+    function openDatabase() {
+      return new Promise((resolve, reject) => {
+        const request = indexedDB.open(DB_NAME, DB_VERSION);
+        request.onupgradeneeded = (e) => {
+          const db = e.target.result;
+          if (!db.objectStoreNames.contains(STORE_NAME)) {
+            db.createObjectStore(STORE_NAME, { keyPath: 'id' });
+          }
+        };
+        request.onsuccess = (e) => resolve(e.target.result);
+        request.onerror = (e) => reject(e.target.error);
+      });
+    }
+
+    async function getAllDocsFromDB() {
+      const db = await openDatabase();
+      return new Promise((resolve, reject) => {
+        const tx = db.transaction(STORE_NAME, 'readonly');
+        const store = tx.objectStore(STORE_NAME);
+        const req = store.getAll();
+        req.onsuccess = () => resolve(req.result);
+        req.onerror = () => reject(req.error);
+      });
+    }
+
+    async function saveDocToDB(doc) {
+      const db = await openDatabase();
+      return new Promise((resolve, reject) => {
+        const tx = db.transaction(STORE_NAME, 'readwrite');
+        const store = tx.objectStore(STORE_NAME);
+        const req = store.put(doc);
+        req.onsuccess = () => resolve(req.result);
+        req.onerror = () => reject(req.error);
+      });
+    }
+
+    async function deleteDocFromDB(id) {
+      const db = await openDatabase();
+      return new Promise((resolve, reject) => {
+        const tx = db.transaction(STORE_NAME, 'readwrite');
+        const store = tx.objectStore(STORE_NAME);
+        const req = store.delete(id);
+        req.onsuccess = () => resolve(req.result);
+        req.onerror = () => reject(req.error);
+      });
+    }
+
+    /* =====================================================================
+       3. KHỞI TẠO HỆ THỐNG
+       ===================================================================== */
+    async function initApp() {
+      // 1. Tải danh sách người dùng
+      const savedUsers = localStorage.getItem('muonglam_users');
+      if (savedUsers) {
+        usersList = JSON.parse(savedUsers);
+      } else {
+        usersList = [...DEFAULT_USERS];
+        localStorage.setItem('muonglam_users', JSON.stringify(usersList));
+      }
+
+      // 2. Tải danh sách cuộc họp
+      const savedMeetings = localStorage.getItem('muonglam_meetings');
+      if (savedMeetings) {
+        meetingsList = JSON.parse(savedMeetings);
+      } else {
+        meetingsList = [...DEFAULT_MEETINGS];
+        localStorage.setItem('muonglam_meetings', JSON.stringify(meetingsList));
+      }
+
+      // 3. Kiểm tra xem có quét mã QR trực tiếp không (param ?meeting=xxx)
+      const urlParams = new URLSearchParams(window.location.search);
+      const queryMeetingId = urlParams.get('meeting');
+      if (queryMeetingId && meetingsList.some(m => m.id === queryMeetingId)) {
+        currentMeetingId = queryMeetingId;
+        const qm = meetingsList.find(m => m.id === queryMeetingId);
+        document.getElementById('portalQrNotice').classList.remove('hidden');
+        document.getElementById('portalQrMeetingTitle').innerText = qm.title;
+      } else {
+        currentMeetingId = meetingsList[0].id;
+      }
+      currentMeeting = meetingsList.find(m => m.id === currentMeetingId) || meetingsList[0];
+
+      // 4. Render danh sách cuộc họp lên trang cổng chào
+      renderPortalMeetingSelect();
+
+      // 5. Tải tài liệu từ IndexedDB
+      try {
+        const docs = await getAllDocsFromDB();
+        if (docs && docs.length > 0) {
+          allDocuments = docs;
+        } else {
+          // Khởi tạo tài liệu mẫu xã Mường Lầm
+          const sampleDocs = [
+            {
+              id: 'doc-ml-1',
+              meetingId: 'hop-hdnd-muonglam-k11',
+              title: 'Chương trình Kỳ họp thứ mười một HĐND Xã Mường Lầm khóa XXI',
+              category: 'Chương trình - Kịch bản',
+              session: 'Phiên chính thức',
+              fileType: 'pdf',
+              fileSize: '1.1 MB',
+              dateUploaded: '16/11/2026 08:00',
+              isPinned: true,
+              sampleContent: 'CHƯƠNG TRÌNH KỲ HỌP THỨ MƯỜI MỘT\nHỘI ĐỒNG NHÂN DÂN XÃ MƯỜNG LẦM KHÓA XXI\n\nBuổi sáng:\n07h30 - 08h00: Đón tiếp đại biểu, phát tài liệu số\n08h00 - 08h30: Khai mạc kỳ họp\n08h30 - 09h30: Báo cáo kết quả thực hiện kế hoạch KT-XH\n09h30 - 10h30: Thảo luận, đóng góp ý kiến\n10h30 - 11h30: Thông qua các Nghị quyết của HĐND Xã.'
+            },
+            {
+              id: 'doc-ml-2',
+              meetingId: 'hop-hdnd-muonglam-k11',
+              title: 'Báo cáo tình hình phát triển kinh tế - xã hội, quốc phòng - an ninh năm 2026 Xã Mường Lầm',
+              category: 'Báo cáo chính trị',
+              session: 'Phiên chính thức',
+              fileType: 'pdf',
+              fileSize: '3.6 MB',
+              dateUploaded: '16/11/2026 08:15',
+              isPinned: true,
+              sampleContent: 'BÁO CÁO CỦA UBND XÃ MƯỜNG LẦM\n\n1. Kết quả sản xuất nông lâm nghiệp, chuyển đổi cơ cấu cây trồng.\n2. Công tác xây dựng nông thôn mới và giảm nghèo bền vững trên địa bàn các bản.\n3. Quản lý đất đai, tài nguyên và bảo vệ môi trường.\n4. Giữ vững an ninh trật tự và củng cố quốc phòng an ninh địa phương.'
+            },
+            {
+              id: 'doc-ml-3',
+              meetingId: 'hop-hdnd-muonglam-k11',
+              title: 'Dự thảo Nghị quyết về dự toán thu chi ngân sách xã năm 2027 (Biểu quyết)',
+              category: 'Nghị quyết - Biên bản',
+              session: 'Phiên chính thức',
+              fileType: 'pdf',
+              fileSize: '1.8 MB',
+              dateUploaded: '16/11/2026 08:30',
+              isPinned: true,
+              sampleContent: 'DỰ THẢO NGHỊ QUYẾT HĐND XÃ MƯỜNG LẦM\n\nQuyết nghị thông qua:\n1. Phân bổ dự toán thu chi ngân sách năm 2027.\n2. Đầu tư nâng cấp hệ thống thủy lợi và đường liên bản.\n3. Các chính sách hỗ trợ phát triển kinh tế hộ gia đình.'
+            },
+            {
+              id: 'doc-ml-4',
+              meetingId: 'hop-danguy-t11',
+              title: 'Báo cáo công tác xây dựng Đảng và củng cố hệ thống chính trị tháng 11/2026',
+              category: 'Báo cáo chính trị',
+              session: 'Phiên chính thức',
+              fileType: 'docx',
+              fileSize: '980 KB',
+              dateUploaded: '20/11/2026 08:00',
+              isPinned: true
+            }
+          ];
+          for (let sample of sampleDocs) {
+            await saveDocToDB(sample);
+          }
+          allDocuments = [...sampleDocs];
+        }
+      } catch (err) {
+        console.warn('Lỗi IndexedDB:', err);
+      }
+
+      // 6. Kiểm tra phiên đăng nhập đã lưu
+      const savedCurUser = localStorage.getItem('muonglam_current_user');
+      if (savedCurUser) {
+        currentUser = JSON.parse(savedCurUser);
+        enterMeetingRoom();
+      } else {
+        // Mặc định hiển thị trang Landing Portal đầu tiên
+        document.getElementById('landingPortal').classList.remove('hidden');
+      }
+    }
+
+    /* =====================================================================
+       4. ĐIỀU HƯỚNG CỔNG CHÀO (LANDING PORTAL)
+       ===================================================================== */
+    function renderPortalMeetingSelect() {
+      const select = document.getElementById('portalMeetingSelect');
+      select.innerHTML = meetingsList.map(m => `
+        <option value="${m.id}" ${m.id === currentMeetingId ? 'selected' : ''}>
+          [${m.type}] ${m.title}
+        </option>
+      `).join('');
+    }
+
+    // Phương án 1: Vào với tư cách Đại biểu dự họp
+    function enterAsDelegate() {
+      const selectedMeetingId = document.getElementById('portalMeetingSelect').value;
+      const delegateName = document.getElementById('portalDelegateName').value.trim() || 'Đại biểu dự họp';
+      const delegateUnit = document.getElementById('portalDelegateUnit').value.trim() || 'Xã Mường Lầm';
+
+      currentUser = {
+        role: 'delegate',
+        fullName: delegateName,
+        department: delegateUnit,
+        username: 'daibieu'
+      };
+
+      localStorage.setItem('muonglam_current_user', JSON.stringify(currentUser));
+      currentMeetingId = selectedMeetingId;
+      currentMeeting = meetingsList.find(m => m.id === selectedMeetingId) || meetingsList[0];
+
+      enterMeetingRoom();
+    }
+
+    // Phương án 2: Đăng nhập Cán bộ / Thư ký để tạo họp
+    function loginFromPortal() {
+      const u = document.getElementById('portalUsername').value.trim().toLowerCase();
+      const p = document.getElementById('portalPassword').value.trim();
+
+      const found = usersList.find(x => x.username.toLowerCase() === u && x.password === p);
+      if (found) {
+        currentUser = found;
+        localStorage.setItem('muonglam_current_user', JSON.stringify(currentUser));
+        enterMeetingRoom();
+        if (found.role === 'admin' || found.role === 'moderator') {
+          switchTab('adminManage');
+        }
+      } else {
+        alert('Tên đăng nhập hoặc mật khẩu không chính xác! Vui lòng kiểm tra lại.');
+      }
+    }
+
+    // Vào phòng họp chính
+    function enterMeetingRoom() {
+      document.getElementById('landingPortal').classList.add('hidden');
+      updateUserUI();
+      renderMeetingSelector();
+      applyMeetingData(currentMeeting);
+      renderCategoryPills();
+      filterDocuments();
+      renderAgenda();
+      loadNotes();
+      renderUsersTable();
+      generateQrCodes();
+    }
+
+    // Thoát ra Cổng đăng nhập (Đổi phương án)
+    function returnToPortal() {
+      currentUser = null;
+      localStorage.removeItem('muonglam_current_user');
+      document.getElementById('landingPortal').classList.remove('hidden');
+      renderPortalMeetingSelect();
+      switchTab('documents');
+    }
+
+    /* =====================================================================
+       5. PHÂN QUYỀN & GIAO DIỆN NGƯỜI DÙNG (AUTH & RBAC)
+       ===================================================================== */
+    function updateUserUI() {
+      if (!currentUser) return;
+
+      document.getElementById('userNameDisplay').innerText = currentUser.fullName;
+      document.getElementById('dropdownUserName').innerText = currentUser.fullName;
+      document.getElementById('dropdownUserDept').innerText = currentUser.department || 'Xã Mường Lầm';
+
+      const roleLabel = currentUser.role === 'admin' ? 'Quản trị viên Xã' : (currentUser.role === 'moderator' ? 'Thư ký kỳ họp' : 'Đại biểu');
+      document.getElementById('userRoleBadge').innerText = roleLabel;
+      document.getElementById('userAvatar').innerText = currentUser.role === 'delegate' ? 'ĐB' : currentUser.username.substring(0, 2).toUpperCase();
+
+      const tabBtnAdmin = document.getElementById('tabBtnAdmin');
+      const tabBtnUsers = document.getElementById('tabBtnUsers');
+      const btnQuickCreate = document.getElementById('btnQuickCreateMeeting');
+      const btnMenuCreate = document.getElementById('btnMenuCreateMeeting');
+      const btnMenuAdmin = document.getElementById('btnMenuAdminDocs');
+      const btnMenuUser = document.getElementById('btnMenuUserManage');
+
+      if (currentUser.role === 'admin' || currentUser.role === 'moderator') {
+        tabBtnAdmin.classList.remove('hidden');
+        tabBtnAdmin.classList.add('flex');
+        btnQuickCreate.classList.remove('hidden');
+        btnMenuCreate.classList.remove('hidden');
+        btnMenuAdmin.classList.remove('hidden');
+      } else {
+        tabBtnAdmin.classList.add('hidden');
+        btnQuickCreate.classList.add('hidden');
+        btnMenuCreate.classList.add('hidden');
+        btnMenuAdmin.classList.add('hidden');
+      }
+
+      if (currentUser.role === 'admin') {
+        tabBtnUsers.classList.remove('hidden');
+        tabBtnUsers.classList.add('flex');
+        btnMenuUser.classList.remove('hidden');
+      } else {
+        tabBtnUsers.classList.add('hidden');
+        btnMenuUser.classList.add('hidden');
+      }
+    }
+
+    function toggleUserDropdown() {
+      document.getElementById('userDropdown').classList.toggle('hidden');
+    }
+
+    document.addEventListener('click', (e) => {
+      const profile = document.getElementById('userProfileMenu');
+      const dropdown = document.getElementById('userDropdown');
+      if (profile && !profile.contains(e.target)) {
+        dropdown.classList.add('hidden');
+      }
+    });
+
+    /* Quản lý danh sách người dùng cho Admin */
+    function renderUsersTable() {
+      const tbody = document.getElementById('userTableBody');
+      const badge = document.getElementById('usersCountBadge');
+      badge.innerText = usersList.length;
+
+      tbody.innerHTML = usersList.map(u => {
+        let roleBadge = '';
+        let roleDesc = '';
+        if (u.role === 'admin') {
+          roleBadge = '<span class="px-2 py-0.5 rounded-full bg-red-100 text-red-700 font-bold text-[10px]">Quản Trị Viên</span>';
+          roleDesc = 'Toàn quyền quản lý xã & phân quyền';
+        } else if (u.role === 'moderator') {
+          roleBadge = '<span class="px-2 py-0.5 rounded-full bg-amber-100 text-amber-800 font-bold text-[10px]">Thư Ký / Người Tạo Họp</span>';
+          roleDesc = 'Tạo cuộc họp & đưa tài liệu lên';
+        } else {
+          roleBadge = '<span class="px-2 py-0.5 rounded-full bg-blue-100 text-blue-800 font-bold text-[10px]">Đại Biểu</span>';
+          roleDesc = 'Xem văn kiện & ghi chép';
+        }
+
+        return `
+          <tr class="hover:bg-slate-50 transition">
+            <td class="py-3 px-3 font-mono font-bold text-slate-900">${u.username}</td>
+            <td class="py-3 px-3 font-medium text-slate-800">${u.fullName}</td>
+            <td class="py-3 px-3 text-slate-500">${u.department || 'UBND Xã Mường Lầm'}</td>
+            <td class="py-3 px-3">${roleBadge}</td>
+            <td class="py-3 px-3 text-[11px] text-slate-500">${roleDesc}</td>
+            <td class="py-3 px-3 text-right">
+              ${u.username === 'admin' ? '<span class="text-slate-400 italic">Mặc định</span>' : `
+                <button onclick="deleteUser('${u.username}')" class="text-red-500 hover:text-red-700 font-bold p-1" title="Xóa tài khoản">
+                  <i class="fa-regular fa-trash-can"></i>
+                </button>
+              `}
+            </td>
+          </tr>
+        `;
+      }).join('');
+    }
+
+    function openAddUserModal() {
+      document.getElementById('addUserModal').classList.remove('hidden');
+    }
+
+    function closeAddUserModal() {
+      document.getElementById('addUserModal').classList.add('hidden');
+    }
+
+    function submitNewUser() {
+      const username = document.getElementById('newUsername').value.trim().toLowerCase();
+      const pass = document.getElementById('newUserPass').value.trim();
+      const fullName = document.getElementById('newUserFullName').value.trim();
+      const dept = document.getElementById('newUserDept').value.trim();
+      const role = document.getElementById('newUserRole').value;
+
+      if (!username || !pass || !fullName) {
+        alert('Vui lòng điền đầy đủ tên đăng nhập, mật khẩu và họ tên cán bộ!');
+        return;
+      }
+
+      if (usersList.some(u => u.username === username)) {
+        alert('Tên đăng nhập này đã tồn tại trong hệ thống. Vui lòng chọn tên khác!');
+        return;
+      }
+
+      usersList.push({
+        username: username,
+        password: pass,
+        fullName: fullName,
+        department: dept,
+        role: role
+      });
+
+      localStorage.setItem('muonglam_users', JSON.stringify(usersList));
+      renderUsersTable();
+      closeAddUserModal();
+
+      document.getElementById('newUsername').value = '';
+      document.getElementById('newUserFullName').value = '';
+      document.getElementById('newUserDept').value = '';
+      alert(`Đã cấp thành công tài khoản cho cán bộ ${fullName}!`);
+    }
+
+    function deleteUser(username) {
+      if (confirm(`Đồng chí có chắc chắn muốn xóa tài khoản "${username}" không?`)) {
+        usersList = usersList.filter(u => u.username !== username);
+        localStorage.setItem('muonglam_users', JSON.stringify(usersList));
+        renderUsersTable();
+      }
+    }
+
+    /* =====================================================================
+       6. QUẢN LÝ CUỘC HỌP (MULTI-MEETING)
+       ===================================================================== */
+    function renderMeetingSelector() {
+      const select = document.getElementById('meetingSelector');
+      select.innerHTML = meetingsList.map(m => `
+        <option value="${m.id}" ${m.id === currentMeetingId ? 'selected' : ''}>
+          📁 [${m.type}] ${m.title}
+        </option>
+      `).join('');
+    }
+
+    function changeActiveMeeting(meetingId) {
+      currentMeetingId = meetingId;
+      currentMeeting = meetingsList.find(m => m.id === meetingId) || meetingsList[0];
+      applyMeetingData(currentMeeting);
+      filterDocuments();
+      generateQrCodes();
+      renderAdminDocsTable();
+    }
+
+    function applyMeetingData(m) {
+      if (!m) return;
+      document.getElementById('badgeEventType').innerText = m.type;
+      document.getElementById('headerMeetingTitle').innerText = m.title;
+      document.getElementById('bannerTitle').innerText = m.title;
+      document.getElementById('bannerSlogan').innerText = m.slogan || 'Đoàn kết - Dân chủ - Kỷ cương - Đổi mới';
+      document.getElementById('bannerDateTime').innerText = m.dateTime || 'Đang diễn ra';
+      document.getElementById('bannerLocation').innerText = m.location || 'Hội trường Xã Mường Lầm';
+      document.getElementById('bannerDelegateCount').innerText = m.delegates || 'Đại biểu chính thức';
+      document.getElementById('bannerCreatedBy').innerText = 'Người phụ trách: ' + (m.createdBy || 'Văn phòng HĐND-UBND');
+
+      // Admin fields
+      document.getElementById('cfgEventType').value = m.type;
+      document.getElementById('cfgTitle').value = m.title;
+      document.getElementById('cfgSlogan').value = m.slogan || '';
+      document.getElementById('cfgDateTime').value = m.dateTime || '';
+      document.getElementById('cfgDelegates').value = m.delegates || '';
+      document.getElementById('cfgLocation').value = m.location || '';
+      document.getElementById('adminActiveMeetingName').innerText = m.title;
+      document.getElementById('adminActiveRoleName').innerText = currentUser ? (currentUser.role === 'admin' ? 'Quản trị viên Xã' : 'Thư ký kỳ họp') : 'Thư ký';
+      document.getElementById('qrMeetingNameLabel').innerText = m.title;
+      document.getElementById('modalQrMeetingName').innerText = m.title;
+
+      // Print fields
+      document.getElementById('printEventType').innerText = m.type;
+      document.getElementById('printMeetingTitle').innerText = m.title;
+      document.getElementById('printDateTime').innerText = `Thời gian: ${m.dateTime} | Địa điểm: ${m.location}`;
+
+      applyTheme(m.theme || 'red');
+    }
+
+    function applyTheme(theme) {
+      const banner = document.getElementById('eventBanner');
+      const headerIcon = document.getElementById('headerLogoBadge');
+      
+      if (theme === 'blue') {
+        banner.className = 'relative overflow-hidden bg-gradient-to-r from-bizblue-900 via-bizblue-800 to-bizblue-900 text-white shadow-md transition-all duration-300';
+        headerIcon.className = 'w-10 h-10 sm:w-12 sm:h-12 rounded-xl bg-gradient-to-tr from-bizblue-700 to-bizblue-500 text-white flex items-center justify-center text-xl sm:text-2xl font-bold shadow-md shadow-bizblue-700/20';
+        document.getElementById('headerIcon').className = 'fa-solid fa-briefcase';
+      } else {
+        banner.className = 'relative overflow-hidden bg-gradient-to-r from-redgov-800 via-redgov-700 to-redgov-900 text-white shadow-md transition-all duration-300';
+        headerIcon.className = 'w-10 h-10 sm:w-12 sm:h-12 rounded-xl bg-gradient-to-tr from-redgov-700 to-redgov-500 text-white flex items-center justify-center text-xl sm:text-2xl font-bold shadow-md shadow-redgov-700/20';
+        document.getElementById('headerIcon').className = 'fa-solid fa-tablet-screen-button';
+      }
+    }
+
+    function toggleThemeStyle() {
+      currentMeeting.theme = (currentMeeting.theme === 'red') ? 'blue' : 'red';
+      localStorage.setItem('muonglam_meetings', JSON.stringify(meetingsList));
+      applyTheme(currentMeeting.theme);
+    }
+
+    function saveMeetingConfig() {
+      currentMeeting.type = document.getElementById('cfgEventType').value;
+      currentMeeting.title = document.getElementById('cfgTitle').value;
+      currentMeeting.slogan = document.getElementById('cfgSlogan').value;
+      currentMeeting.dateTime = document.getElementById('cfgDateTime').value;
+      currentMeeting.delegates = document.getElementById('cfgDelegates').value;
+      currentMeeting.location = document.getElementById('cfgLocation').value;
+
+      localStorage.setItem('muonglam_meetings', JSON.stringify(meetingsList));
+      renderMeetingSelector();
+      renderPortalMeetingSelect();
+      applyMeetingData(currentMeeting);
+      generateQrCodes();
+      alert('Đã cập nhật thông tin cuộc họp thành công!');
+    }
+
+    function openCreateMeetingModal() {
+      if (!currentUser || (currentUser.role !== 'admin' && currentUser.role !== 'moderator')) {
+        alert('Vui lòng đăng nhập với tư cách Ban Tổ chức / Thư ký để tạo cuộc họp!');
+        returnToPortal();
+        return;
+      }
+      document.getElementById('createMeetingModal').classList.remove('hidden');
+    }
+
+    function closeCreateMeetingModal() {
+      document.getElementById('createMeetingModal').classList.add('hidden');
+    }
+
+    function submitNewMeeting() {
+      const title = document.getElementById('newMeetingTitle').value.trim();
+      const type = document.getElementById('newMeetingType').value;
+      const slogan = document.getElementById('newMeetingSlogan').value.trim();
+      const dateTime = document.getElementById('newMeetingTime').value.trim();
+      const delegates = document.getElementById('newMeetingDelegates').value.trim();
+      const location = document.getElementById('newMeetingLocation').value.trim();
+      const theme = document.getElementById('newMeetingTheme').value;
+
+      if (!title) {
+        alert('Vui lòng nhập tên cuộc họp!');
+        return;
+      }
+
+      const newId = 'hop-ml-' + Date.now();
+      const newM = {
+        id: newId,
+        title: title,
+        type: type,
+        slogan: slogan,
+        dateTime: dateTime,
+        delegates: delegates,
+        location: location,
+        theme: theme,
+        createdBy: currentUser ? currentUser.fullName : 'Thư ký'
+      };
+
+      meetingsList.unshift(newM);
+      localStorage.setItem('muonglam_meetings', JSON.stringify(meetingsList));
+
+      closeCreateMeetingModal();
+      document.getElementById('newMeetingTitle').value = '';
+      document.getElementById('newMeetingSlogan').value = '';
+
+      changeActiveMeeting(newId);
+      renderMeetingSelector();
+      renderPortalMeetingSelect();
+      switchTab('adminManage');
+      alert(`Đã tạo thành công tệp cuộc họp "${title}"! Đồng chí có thể đưa tài liệu lên ngay.`);
+    }
+
+    /* =====================================================================
+       7. XUẤT MÃ QR CHO ĐẠI BIỂU XÃ MƯỜNG LẦM
+       ===================================================================== */
+    function getMeetingShareUrl() {
+      const baseUrl = window.location.href.split('?')[0];
+      return `${baseUrl}?meeting=${currentMeetingId}`;
+    }
+
+    function generateQrCodes() {
+      const shareUrl = getMeetingShareUrl();
+      document.getElementById('shareMeetingUrlInput').value = shareUrl;
+
+      // 1. QR Preview Admin
+      const adminQr = document.getElementById('adminQrCodePreview');
+      adminQr.innerHTML = '';
+      new QRCode(adminQr, {
+        text: shareUrl,
+        width: 140,
+        height: 140,
+        colorDark: "#111827",
+        colorLight: "#ffffff",
+        correctLevel: QRCode.CorrectLevel.M
+      });
+
+      // 2. QR Modal Popup
+      const modalQr = document.getElementById('delegateModalQrContainer');
+      modalQr.innerHTML = '';
+      new QRCode(modalQr, {
+        text: shareUrl,
+        width: 180,
+        height: 180,
+        colorDark: "#9f1239",
+        colorLight: "#ffffff",
+        correctLevel: QRCode.CorrectLevel.H
+      });
+
+      // 3. QR Bản in Khổ A4
+      const printQr = document.getElementById('printQrCodeHolder');
+      printQr.innerHTML = '';
+      new QRCode(printQr, {
+        text: shareUrl,
+        width: 220,
+        height: 220,
+        colorDark: "#000000",
+        colorLight: "#ffffff",
+        correctLevel: QRCode.CorrectLevel.H
+      });
+    }
+
+    function openQRModal() {
+      generateQrCodes();
+      document.getElementById('qrModal').classList.remove('hidden');
+    }
+
+    function closeQRModal() {
+      document.getElementById('qrModal').classList.add('hidden');
+    }
+
+    function copyMeetingUrl() {
+      const url = document.getElementById('shareMeetingUrlInput').value;
+      navigator.clipboard.writeText(url);
+      alert('Đã sao chép đường link phòng họp vào bộ nhớ tạm!');
+    }
+
+    function downloadQrImage() {
+      const container = document.getElementById('delegateModalQrContainer');
+      const canvas = container.querySelector('canvas');
+      const img = container.querySelector('img');
+
+      let dataUrl = '';
+      if (canvas) {
+        dataUrl = canvas.toDataURL('image/png');
+      } else if (img) {
+        dataUrl = img.src;
+      }
+
+      if (dataUrl) {
+        const a = document.createElement('a');
+        a.href = dataUrl;
+        a.download = `QR-MuongLam-${currentMeeting.title.substring(0, 30).replace(/\s+/g, '_')}.png`;
+        a.click();
+      } else {
+        alert('Đang tạo mã QR, vui lòng thử lại sau 1 giây.');
+      }
+    }
+
+    function printDelegateQRCard() {
+      const printArea = document.getElementById('printArea');
+      printArea.classList.remove('hidden');
+      window.print();
+      printArea.classList.add('hidden');
+    }
+
+    /* =====================================================================
+       8. LỌC & HIỂN THỊ TÀI LIỆU
+       ===================================================================== */
+    function renderCategoryPills() {
+      const container = document.getElementById('categoryPillContainer');
+      container.innerHTML = CATEGORIES.map(cat => {
+        const isActive = (cat === activeCategory);
+        const activeCls = isActive 
+          ? 'bg-redgov-600 text-white shadow-sm font-bold' 
+          : 'bg-slate-100 hover:bg-slate-200 text-slate-700';
+        return `
+          <button onclick="selectCategory('${cat}')" class="px-3 py-1.5 rounded-xl whitespace-nowrap transition ${activeCls}">
+            ${cat}
+          </button>
+        `;
+      }).join('');
+    }
+
+    function selectCategory(cat) {
+      activeCategory = cat;
+      renderCategoryPills();
+      filterDocuments();
+    }
+
+    function setViewMode(mode) {
+      currentViewMode = mode;
+      const gridBtn = document.getElementById('viewModeGrid');
+      const listBtn = document.getElementById('viewModeList');
+      const container = document.getElementById('documentsContainer');
+
+      if (mode === 'grid') {
+        gridBtn.className = 'p-1.5 sm:px-2.5 text-xs font-semibold rounded-lg bg-white shadow-sm text-slate-800';
+        listBtn.className = 'p-1.5 sm:px-2.5 text-xs font-medium rounded-lg text-slate-500 hover:text-slate-800';
+        container.className = 'grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4';
+      } else {
+        listBtn.className = 'p-1.5 sm:px-2.5 text-xs font-semibold rounded-lg bg-white shadow-sm text-slate-800';
+        gridBtn.className = 'p-1.5 sm:px-2.5 text-xs font-medium rounded-lg text-slate-500 hover:text-slate-800';
+        container.className = 'space-y-3';
+      }
+      filterDocuments();
+    }
+
+    function clearSearch() {
+      document.getElementById('searchInput').value = '';
+      document.getElementById('clearSearchBtn').classList.add('hidden');
+      filterDocuments();
+    }
+
+    function resetFilters() {
+      document.getElementById('searchInput').value = '';
+      document.getElementById('sessionFilter').value = 'all';
+      activeCategory = 'Tất cả';
+      renderCategoryPills();
+      filterDocuments();
+    }
+
+    function filterDocuments() {
+      const query = document.getElementById('searchInput').value.trim().toLowerCase();
+      const session = document.getElementById('sessionFilter').value;
+      const clearBtn = document.getElementById('clearSearchBtn');
+
+      if (query) {
+        clearBtn.classList.remove('hidden');
+      } else {
+        clearBtn.classList.add('hidden');
+      }
+
+      let meetingDocs = allDocuments.filter(d => (!d.meetingId || d.meetingId === currentMeetingId));
+
+      let filtered = meetingDocs.filter(doc => {
+        const matchesCategory = (activeCategory === 'Tất cả') || (doc.category === activeCategory);
+        const matchesSession = (session === 'all') || (doc.session === session);
+        const matchesQuery = !query || (
+          doc.title.toLowerCase().includes(query) ||
+          (doc.category && doc.category.toLowerCase().includes(query)) ||
+          (doc.fileType && doc.fileType.toLowerCase().includes(query))
+        );
+        return matchesCategory && matchesSession && matchesQuery;
+      });
+
+      const pinnedContainer = document.getElementById('pinnedDocsSection');
+      const pinnedGrid = document.getElementById('pinnedDocsGrid');
+      const pinnedDocs = meetingDocs.filter(d => d.isPinned);
+
+      if (activeCategory === 'Tất cả' && !query && pinnedDocs.length > 0) {
+        pinnedContainer.classList.remove('hidden');
+        pinnedGrid.innerHTML = pinnedDocs.map(d => renderPinnedCard(d)).join('');
+      } else {
+        pinnedContainer.classList.add('hidden');
+      }
+
+      const docsContainer = document.getElementById('documentsContainer');
+      const emptyState = document.getElementById('emptyDocsState');
+      const countBadge = document.getElementById('filteredCountBadge');
+
+      countBadge.innerText = filtered.length;
+      document.getElementById('totalDocsCount').innerText = meetingDocs.length;
+      document.getElementById('adminDocsCount').innerText = meetingDocs.length;
+
+      if (filtered.length === 0) {
+        docsContainer.innerHTML = '';
+        emptyState.classList.remove('hidden');
+      } else {
+        emptyState.classList.add('hidden');
+        if (currentViewMode === 'grid') {
+          docsContainer.innerHTML = filtered.map(d => renderDocCard(d)).join('');
+        } else {
+          docsContainer.innerHTML = filtered.map(d => renderDocListItem(d)).join('');
+        }
+      }
+    }
+
+    function getFileIconInfo(type) {
+      const t = (type || 'file').toLowerCase();
+      if (t.includes('pdf')) return { icon: 'fa-solid fa-file-pdf', color: 'text-red-600', bg: 'bg-red-50 border-red-200' };
+      if (t.includes('doc') || t.includes('word')) return { icon: 'fa-solid fa-file-word', color: 'text-blue-600', bg: 'bg-blue-50 border-blue-200' };
+      if (t.includes('xls') || t.includes('sheet') || t.includes('excel')) return { icon: 'fa-solid fa-file-excel', color: 'text-emerald-600', bg: 'bg-emerald-50 border-emerald-200' };
+      if (t.includes('ppt') || t.includes('powerpoint')) return { icon: 'fa-solid fa-file-powerpoint', color: 'text-orange-600', bg: 'bg-orange-50 border-orange-200' };
+      if (t.includes('jpg') || t.includes('png') || t.includes('image')) return { icon: 'fa-solid fa-file-image', color: 'text-purple-600', bg: 'bg-purple-50 border-purple-200' };
+      return { icon: 'fa-solid fa-file-lines', color: 'text-slate-600', bg: 'bg-slate-50 border-slate-200' };
+    }
+
+    function renderDocCard(doc) {
+      const fileInfo = getFileIconInfo(doc.fileType);
+      return `
+        <div onclick="openDocViewer('${doc.id}')" class="bg-white rounded-2xl p-4 border border-slate-200/90 shadow-sm hover:shadow-md hover:border-redgov-400 transition cursor-pointer flex flex-col justify-between group">
+          <div class="space-y-3">
+            <div class="flex items-start justify-between gap-2">
+              <div class="w-10 h-10 rounded-xl ${fileInfo.bg} ${fileInfo.color} flex items-center justify-center text-xl shrink-0 group-hover:scale-105 transition">
+                <i class="${fileInfo.icon}"></i>
+              </div>
+              <span class="text-[10px] font-bold px-2 py-0.5 rounded-full bg-slate-100 text-slate-600 uppercase tracking-wider">
+                ${doc.session || 'Phiên chính thức'}
+              </span>
+            </div>
+
+            <div>
+              <h4 class="text-sm font-bold text-slate-900 group-hover:text-redgov-700 transition line-clamp-2 leading-snug">
+                ${doc.title}
+              </h4>
+              <p class="text-xs text-slate-500 mt-1 line-clamp-1">
+                <i class="fa-regular fa-folder mr-1 text-slate-400"></i>${doc.category}
+              </p>
+            </div>
+          </div>
+
+          <div class="flex items-center justify-between pt-3 mt-3 border-t border-slate-100 text-[11px] text-slate-400">
+            <span><i class="fa-regular fa-hard-drive mr-1"></i>${doc.fileSize || '1.0 MB'}</span>
+            <span class="text-redgov-600 font-semibold group-hover:underline flex items-center">
+              Xem ngay <i class="fa-solid fa-arrow-right ml-1 text-[10px]"></i>
+            </span>
+          </div>
+        </div>
+      `;
+    }
+
+    function renderDocListItem(doc) {
+      const fileInfo = getFileIconInfo(doc.fileType);
+      return `
+        <div onclick="openDocViewer('${doc.id}')" class="bg-white rounded-xl p-3 sm:p-4 border border-slate-200 shadow-sm hover:shadow-md hover:border-redgov-300 transition cursor-pointer flex items-center justify-between gap-3 group">
+          <div class="flex items-center space-x-3 overflow-hidden">
+            <div class="w-10 h-10 rounded-xl ${fileInfo.bg} ${fileInfo.color} flex items-center justify-center text-lg shrink-0">
+              <i class="${fileInfo.icon}"></i>
+            </div>
+            <div class="overflow-hidden">
+              <h4 class="text-xs sm:text-sm font-bold text-slate-900 group-hover:text-redgov-700 transition truncate">
+                ${doc.title}
+              </h4>
+              <div class="flex items-center space-x-2 text-[11px] text-slate-500 mt-0.5">
+                <span>${doc.category}</span>
+                <span>•</span>
+                <span>${doc.session}</span>
+                <span>•</span>
+                <span>${doc.fileSize || '1 MB'}</span>
+              </div>
+            </div>
+          </div>
+
+          <button class="shrink-0 px-3 py-1.5 rounded-lg bg-slate-50 group-hover:bg-redgov-50 text-slate-600 group-hover:text-redgov-700 text-xs font-bold transition flex items-center">
+            Đọc <i class="fa-solid fa-chevron-right ml-1 text-[10px]"></i>
+          </button>
+        </div>
+      `;
+    }
+
+    function renderPinnedCard(doc) {
+      const fileInfo = getFileIconInfo(doc.fileType);
+      return `
+        <div onclick="openDocViewer('${doc.id}')" class="bg-gradient-to-r from-red-50 to-amber-50/40 border border-red-200/80 rounded-2xl p-3.5 shadow-sm hover:shadow transition cursor-pointer flex items-center space-x-3 group">
+          <div class="w-10 h-10 rounded-xl bg-red-600 text-white flex items-center justify-center text-lg shrink-0 shadow-sm">
+            <i class="${fileInfo.icon}"></i>
+          </div>
+          <div class="overflow-hidden flex-1">
+            <div class="flex items-center space-x-1.5">
+              <span class="text-[9px] font-extrabold uppercase px-1.5 py-0.2 rounded bg-red-600 text-white">Biểu quyết</span>
+              <span class="text-[10px] text-slate-500">${doc.fileSize || '2 MB'}</span>
+            </div>
+            <h4 class="text-xs font-bold text-slate-900 group-hover:text-red-700 transition truncate mt-0.5">
+              ${doc.title}
+            </h4>
+          </div>
+          <i class="fa-solid fa-chevron-right text-xs text-red-400 group-hover:translate-x-1 transition"></i>
+        </div>
+      `;
+    }
+
+    /* =====================================================================
+       9. XEM CHI TIẾT VĂN KIỆN TRỰC TUYẾN (ZERO DOWNLOAD ONLINE VIEWER)
+       ===================================================================== */
+    // Helper lấy ArrayBuffer an toàn từ dataURL, fileUrl hoặc rawFile
+    async function getFileArrayBuffer(doc) {
+      if (doc.rawFile && typeof doc.rawFile.arrayBuffer === 'function') {
+        try {
+          return await doc.rawFile.arrayBuffer();
+        } catch (e) {}
+      }
+      const url = doc.fileDataUrl || doc.fileUrl;
+      if (!url) return null;
+
+      if (url.startsWith('data:')) {
+        try {
+          const parts = url.split(',');
+          const base64 = parts[1];
+          const binaryStr = atob(base64);
+          const len = binaryStr.length;
+          const bytes = new Uint8Array(len);
+          for (let i = 0; i < len; i++) {
+            bytes[i] = binaryStr.charCodeAt(i);
+          }
+          return bytes.buffer;
+        } catch (err) {
+          console.warn('Giải mã Base64 thủ công lỗi, thử fetch:', err);
+        }
+      }
+
+      try {
+        const res = await fetch(url);
+        return await res.arrayBuffer();
+      } catch (err) {
+        console.error('Không thể lấy ArrayBuffer:', err);
+        return null;
+      }
+    }
+
+    async function openDocViewer(docId) {
+      const doc = allDocuments.find(d => d.id === docId);
+      if (!doc) return;
+      activeDocForModal = doc;
+
+      const modal = document.getElementById('docViewerModal');
+      const modalTitle = document.getElementById('modalDocTitle');
+      const modalMeta = document.getElementById('modalDocMeta');
+      const modalIcon = document.getElementById('modalDocIcon');
+      const viewerBody = document.getElementById('modalViewerBody');
+      const downloadBtn = document.getElementById('modalDownloadBtn');
+
+      modalTitle.innerText = doc.title;
+      modalMeta.innerText = `${doc.category} • ${doc.fileSize || '1 MB'} • ${doc.session || ''}`;
+
+      const fileInfo = getFileIconInfo(doc.fileType);
+      modalIcon.className = `w-8 h-8 rounded-lg ${fileInfo.bg} ${fileInfo.color} flex items-center justify-center shrink-0 text-sm`;
+      modalIcon.innerHTML = `<i class="${fileInfo.icon}"></i>`;
+
+      if (doc.fileDataUrl || doc.fileUrl) {
+        downloadBtn.href = doc.fileDataUrl || doc.fileUrl;
+        downloadBtn.download = doc.title + '.' + (doc.fileType || 'pdf');
+      } else {
+        const blob = new Blob([doc.sampleContent || doc.title], { type: 'text/plain;charset=utf-8' });
+        downloadBtn.href = URL.createObjectURL(blob);
+        downloadBtn.download = doc.title + '.txt';
+      }
+
+      // Trạng thái chờ mở tài liệu online
+      viewerBody.innerHTML = `
+        <div class="flex flex-col items-center justify-center p-8 space-y-3 text-slate-500">
+          <div class="w-12 h-12 rounded-full border-4 border-slate-200 border-t-redgov-600 animate-spin"></div>
+          <p class="text-xs sm:text-sm font-bold text-slate-700">Đang mở tài liệu trực tuyến...</p>
+          <p class="text-[11px] text-slate-400">Đại biểu đọc trực tiếp trên màn hình, không tốn dung lượng máy</p>
+        </div>
+      `;
+      modal.classList.remove('hidden');
+
+      const fType = (doc.fileType || '').toLowerCase();
+      const mime = (doc.mimeType || '').toLowerCase();
+
+      // Phân luồng định dạng xem online
+      if (fType === 'docx' || fType === 'doc' || mime.includes('word') || mime.includes('officedocument.wordprocessingml')) {
+        await renderWordOnline(doc, viewerBody);
+      } else if (fType === 'xlsx' || fType === 'xls' || fType === 'csv' || mime.includes('spreadsheet') || mime.includes('excel')) {
+        await renderExcelOnline(doc, viewerBody);
+      } else if (fType === 'pdf' || mime.includes('pdf')) {
+        await renderPdfOnline(doc, viewerBody);
+      } else if (['jpg', 'jpeg', 'png', 'webp', 'gif'].includes(fType) || mime.includes('image')) {
+        renderImageOnline(doc, viewerBody);
+      } else if (fType === 'pptx' || fType === 'ppt' || mime.includes('presentation')) {
+        renderPptOnline(doc, viewerBody);
+      } else if (doc.sampleContent) {
+        renderSampleDocOnline(doc, viewerBody);
+      } else {
+        renderGenericFileOnline(doc, viewerBody);
+      }
+    }
+
+    /* -------------------------------------------------------------
+       9.1. XEM TRỰC TUYẾN TỆP WORD (.DOCX) - MAMMOTH.JS
+       ------------------------------------------------------------- */
+    let currentWordFontSize = 15;
+
+    async function renderWordOnline(doc, container) {
+      try {
+        const arrayBuffer = await getFileArrayBuffer(doc);
+        if (!arrayBuffer) throw new Error('Không đọc được dữ liệu Word');
+
+        if (window.mammoth) {
+          const result = await mammoth.convertToHtml({ arrayBuffer: arrayBuffer });
+          const html = result.value;
+          if (html && html.trim().length > 0) {
+            container.innerHTML = `
+              <div class="w-full h-full flex flex-col bg-slate-100 overflow-hidden">
+                <!-- Thanh công cụ chỉnh cỡ chữ cho đại biểu -->
+                <div class="bg-white px-4 py-2 border-b border-slate-200 flex items-center justify-between text-xs shrink-0 shadow-sm">
+                  <div class="flex items-center space-x-2 text-blue-700 font-bold">
+                    <i class="fa-solid fa-file-word text-base"></i>
+                    <span>Văn bản Word • Đọc Trực Tuyến</span>
+                  </div>
+                  <div class="flex items-center space-x-1.5">
+                    <span class="text-slate-500 text-[11px] hidden sm:inline">Cỡ chữ đọc:</span>
+                    <button onclick="changeWordFontSize(-1)" class="px-2 py-1 rounded bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold" title="Giảm cỡ chữ">A-</button>
+                    <span id="wordFontLabel" class="font-mono text-xs w-8 text-center text-slate-700 font-bold">${currentWordFontSize}px</span>
+                    <button onclick="changeWordFontSize(1)" class="px-2 py-1 rounded bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold" title="Tăng cỡ chữ">A+</button>
+                  </div>
+                </div>
+
+                <!-- Vùng hiển thị văn bản -->
+                <div class="flex-1 overflow-y-auto p-3 sm:p-6 flex justify-center custom-scroll">
+                  <div class="max-w-4xl w-full bg-white p-6 sm:p-10 rounded-2xl shadow-md border border-slate-200 docx-rendered-content text-slate-800 leading-relaxed">
+                    <div class="border-b border-slate-200 pb-3 mb-5 text-center">
+                      <p class="text-xs uppercase font-extrabold text-redgov-700 tracking-wider">XÃ MƯỜNG LẦM - TỈNH SƠN LA</p>
+                      <h2 class="text-base sm:text-xl font-bold text-slate-900 mt-1">${doc.title}</h2>
+                    </div>
+                    <div id="wordRenderedBody" style="font-size: ${currentWordFontSize}px;">
+                      ${html}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            `;
+            return;
+          }
+        }
+      } catch (err) {
+        console.warn('Lỗi hiển thị Word bằng Mammoth:', err);
+      }
+
+      // Nếu là Word nhưng có mẫu văn bản
+      if (doc.sampleContent) {
+        renderSampleDocOnline(doc, container);
+        return;
+      }
+
+      container.innerHTML = `
+        <div class="text-center p-8 max-w-md bg-white rounded-2xl border border-slate-200 shadow-sm space-y-3 m-4">
+          <div class="w-14 h-14 rounded-2xl bg-blue-50 text-blue-600 flex items-center justify-center mx-auto text-2xl">
+            <i class="fa-solid fa-file-word"></i>
+          </div>
+          <h4 class="text-sm font-bold text-slate-800">${doc.title}</h4>
+          <p class="text-xs text-slate-500">
+            Tệp Word đã sẵn sàng. Định dạng tệp này đại biểu có thể mở qua ứng dụng Word trên máy hoặc tải về.
+          </p>
+          <a href="${doc.fileDataUrl || doc.fileUrl || '#'}" download="${doc.title}.${doc.fileType}" class="inline-flex items-center px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-xl text-xs font-bold transition">
+            <i class="fa-solid fa-download mr-1.5"></i> Tải tệp về máy
+          </a>
+        </div>
+      `;
+    }
+
+    function changeWordFontSize(offset) {
+      currentWordFontSize = Math.min(Math.max(12, currentWordFontSize + offset), 26);
+      const el = document.getElementById('wordRenderedBody');
+      if (el) el.style.fontSize = currentWordFontSize + 'px';
+      const label = document.getElementById('wordFontLabel');
+      if (label) label.innerText = currentWordFontSize + 'px';
+    }
+
+    /* -------------------------------------------------------------
+       9.2. XEM TRỰC TUYẾN TỆP EXCEL (.XLSX, .XLS, .CSV) - SHEETJS
+       ------------------------------------------------------------- */
+    let currentExcelWb = null;
+    let currentExcelActiveSheet = '';
+
+    async function renderExcelOnline(doc, container) {
+      try {
+        const arrayBuffer = await getFileArrayBuffer(doc);
+        if (!arrayBuffer) throw new Error('Không đọc được dữ liệu Excel');
+
+        if (window.XLSX) {
+          currentExcelWb = XLSX.read(arrayBuffer, { type: 'array' });
+          const sheetNames = currentExcelWb.SheetNames;
+          if (sheetNames && sheetNames.length > 0) {
+            currentExcelActiveSheet = sheetNames[0];
+
+            container.innerHTML = `
+              <div class="w-full h-full flex flex-col bg-slate-100 overflow-hidden">
+                <!-- Thanh chuyển Sheet & Tìm kiếm -->
+                <div class="bg-white px-4 py-2.5 border-b border-slate-200 flex flex-wrap items-center justify-between gap-2 shrink-0 shadow-sm">
+                  <div class="flex items-center space-x-1.5 overflow-x-auto custom-scroll-hidden" id="excelSheetTabs">
+                    ${sheetNames.map((s, idx) => `
+                      <button onclick="switchExcelSheet('${s}')" class="excel-tab-btn px-3 py-1.5 rounded-lg text-xs font-bold whitespace-nowrap transition ${idx === 0 ? 'bg-emerald-600 text-white shadow-sm' : 'bg-slate-100 text-slate-700 hover:bg-slate-200'}">
+                        <i class="fa-solid fa-table-cells mr-1"></i>${s}
+                      </button>
+                    `).join('')}
+                  </div>
+                  <div class="flex items-center space-x-2">
+                    <div class="relative">
+                      <i class="fa-solid fa-magnifying-glass absolute left-2.5 top-1/2 -translate-y-1/2 text-slate-400 text-xs"></i>
+                      <input type="text" id="excelSearchInput" oninput="filterExcelTable()" placeholder="Tìm kiếm trong bảng..." class="text-xs pl-8 pr-3 py-1.5 rounded-lg border border-slate-200 bg-slate-50 focus:outline-none focus:ring-1 focus:ring-emerald-500 w-44 sm:w-56">
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Bảng tính cuộn đa chiều -->
+                <div class="flex-1 overflow-auto p-3 sm:p-5 bg-white" id="excelTableHolder">
+                  <!-- Rendered dynamically -->
+                </div>
+              </div>
+            `;
+
+            renderExcelActiveSheetData();
+            return;
+          }
+        }
+      } catch (err) {
+        console.warn('Lỗi hiển thị Excel:', err);
+      }
+
+      container.innerHTML = `
+        <div class="text-center p-8 max-w-md bg-white rounded-2xl border border-slate-200 shadow-sm space-y-3 m-4">
+          <div class="w-14 h-14 rounded-2xl bg-emerald-50 text-emerald-600 flex items-center justify-center mx-auto text-2xl">
+            <i class="fa-solid fa-file-excel"></i>
+          </div>
+          <h4 class="text-sm font-bold text-slate-800">${doc.title}</h4>
+          <p class="text-xs text-slate-500">Bảng tính Excel. Đại biểu có thể tải về để mở trên ứng dụng bảng tính.</p>
+          <a href="${doc.fileDataUrl || doc.fileUrl || '#'}" download="${doc.title}.${doc.fileType}" class="inline-flex items-center px-4 py-2 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl text-xs font-bold transition">
+            <i class="fa-solid fa-download mr-1.5"></i> Tải bảng tính về máy
+          </a>
+        </div>
+      `;
+    }
+
+    function switchExcelSheet(sName) {
+      currentExcelActiveSheet = sName;
+      document.querySelectorAll('.excel-tab-btn').forEach(btn => {
+        if (btn.innerText.includes(sName)) {
+          btn.className = 'excel-tab-btn px-3 py-1.5 rounded-lg text-xs font-bold whitespace-nowrap transition bg-emerald-600 text-white shadow-sm';
+        } else {
+          btn.className = 'excel-tab-btn px-3 py-1.5 rounded-lg text-xs font-bold whitespace-nowrap transition bg-slate-100 text-slate-700 hover:bg-slate-200';
+        }
+      });
+      renderExcelActiveSheetData();
+    }
+
+    function renderExcelActiveSheetData() {
+      if (!currentExcelWb || !currentExcelActiveSheet) return;
+      const ws = currentExcelWb.Sheets[currentExcelActiveSheet];
+      const tableHtml = XLSX.utils.sheet_to_html(ws, { id: 'renderedExcelTable', editable: false });
+      const holder = document.getElementById('excelTableHolder');
+      if (holder) {
+        holder.innerHTML = `
+          <div class="overflow-x-auto border border-slate-200 rounded-xl shadow-sm">
+            ${tableHtml}
+          </div>
+        `;
+        const tbl = document.getElementById('renderedExcelTable');
+        if (tbl) {
+          tbl.querySelectorAll('tr').forEach((tr, idx) => {
+            if (idx === 0) {
+              tr.className = 'bg-slate-100 text-slate-800 font-extrabold uppercase text-[11px] border-b-2 border-slate-300 sticky top-0';
+            } else {
+              tr.className = 'hover:bg-emerald-50/40 border-b border-slate-100 transition';
+            }
+          });
+          tbl.querySelectorAll('td, th').forEach(cell => {
+            cell.className += ' p-2.5 border-r border-slate-200 whitespace-nowrap text-xs';
+          });
+        }
+      }
+    }
+
+    function filterExcelTable() {
+      const q = (document.getElementById('excelSearchInput').value || '').toLowerCase().trim();
+      const tbl = document.getElementById('renderedExcelTable');
+      if (!tbl) return;
+      const rows = tbl.querySelectorAll('tr');
+      rows.forEach((row, idx) => {
+        if (idx === 0) return;
+        const text = row.innerText.toLowerCase();
+        row.style.display = text.includes(q) ? '' : 'none';
+      });
+    }
+
+    /* -------------------------------------------------------------
+       9.3. XEM TRỰC TUYẾN TỆP PDF - PDF.JS CUỘN LIÊN TỤC
+       ------------------------------------------------------------- */
+    let pdfDocInstance = null;
+    let pdfCurrentScale = 1.3;
+
+    async function renderPdfOnline(doc, container) {
+      try {
+        const arrayBuffer = await getFileArrayBuffer(doc);
+        if (!arrayBuffer) throw new Error('Không đọc được dữ liệu PDF');
+
+        if (window.pdfjsLib) {
+          pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+          pdfDocInstance = await pdfjsLib.getDocument({ data: arrayBuffer }).promise;
+          const totalPages = pdfDocInstance.numPages;
+
+          container.innerHTML = `
+            <div class="w-full h-full flex flex-col bg-slate-300 overflow-hidden">
+              <!-- Thanh điều hướng thu phóng PDF -->
+              <div class="bg-slate-900 text-white px-4 py-2 flex items-center justify-between text-xs shrink-0 shadow-md z-10">
+                <span class="font-bold flex items-center text-goldgov-400">
+                  <i class="fa-solid fa-book-open mr-1.5"></i> ${totalPages} Trang Văn Kiện
+                </span>
+                <div class="flex items-center space-x-1.5">
+                  <button onclick="changePdfZoom(-0.2)" class="px-2 py-1 rounded bg-slate-800 hover:bg-slate-700 text-white font-bold" title="Thu nhỏ">
+                    <i class="fa-solid fa-minus"></i>
+                  </button>
+                  <span id="pdfZoomScaleText" class="font-mono text-xs w-12 text-center font-bold">130%</span>
+                  <button onclick="changePdfZoom(0.2)" class="px-2 py-1 rounded bg-slate-800 hover:bg-slate-700 text-white font-bold" title="Phóng to">
+                    <i class="fa-solid fa-plus"></i>
+                  </button>
+                  <button onclick="resetPdfZoom()" class="px-2 py-1 rounded bg-slate-800 hover:bg-slate-700 text-slate-300 font-bold" title="Mặc định">
+                    <i class="fa-solid fa-arrows-rotate"></i>
+                  </button>
+                </div>
+              </div>
+
+              <!-- Danh sách các trang cuộn dọc mượt mà -->
+              <div class="flex-1 overflow-y-auto p-3 sm:p-6 flex flex-col items-center space-y-4 custom-scroll" id="pdfPagesScrollBox">
+                <!-- Canvases rendered sequentially -->
+              </div>
+            </div>
+          `;
+
+          const scrollBox = document.getElementById('pdfPagesScrollBox');
+          for (let pNum = 1; pNum <= totalPages; pNum++) {
+            const pageCard = document.createElement('div');
+            pageCard.className = 'bg-white shadow-xl rounded-xl overflow-hidden flex flex-col items-center border border-slate-300 max-w-full';
+            pageCard.innerHTML = `
+              <div class="text-[10px] text-slate-500 py-1 bg-slate-50 border-b border-slate-200 w-full text-center font-semibold">
+                Trang ${pNum} / ${totalPages}
+              </div>
+              <div class="p-1 overflow-auto max-w-full flex justify-center">
+                <canvas id="pdf-canvas-p${pNum}" class="max-w-full"></canvas>
+              </div>
+            `;
+            scrollBox.appendChild(pageCard);
+            renderPdfSingleCanvas(pNum, `pdf-canvas-p${pNum}`);
+          }
+          return;
+        }
+      } catch (err) {
+        console.warn('Lỗi PDF.js, chuyển sang phương án iframe:', err);
+      }
+
+      // Fallback cho PDF
+      const url = doc.fileDataUrl || doc.fileUrl;
+      container.innerHTML = `
+        <object data="${url}" type="application/pdf" class="w-full h-full border-none">
+          <iframe src="${url}" class="w-full h-full border-none" title="${doc.title}">
+            <p class="p-4 text-center text-xs">Trình duyệt không hỗ trợ xem inline. <a href="${url}" class="text-red-600 font-bold underline" download>Bấm vào đây để tải</a>.</p>
+          </iframe>
+        </object>
+      `;
+    }
+
+    async function renderPdfSingleCanvas(pageNumber, canvasId) {
+      if (!pdfDocInstance) return;
+      try {
+        const page = await pdfDocInstance.getPage(pageNumber);
+        const canvas = document.getElementById(canvasId);
+        if (!canvas) return;
+        const ctx = canvas.getContext('2d');
+        const viewport = page.getViewport({ scale: pdfCurrentScale });
+        canvas.height = viewport.height;
+        canvas.width = viewport.width;
+
+        await page.render({
+          canvasContext: ctx,
+          viewport: viewport
+        }).promise;
+      } catch (e) {
+        console.warn(`Lỗi render trang PDF ${pageNumber}:`, e);
+      }
+    }
+
+    async function changePdfZoom(offset) {
+      pdfCurrentScale = Math.min(Math.max(0.6, pdfCurrentScale + offset), 3.0);
+      const label = document.getElementById('pdfZoomScaleText');
+      if (label) label.innerText = Math.round(pdfCurrentScale * 100) + '%';
+      if (!pdfDocInstance) return;
+      for (let p = 1; p <= pdfDocInstance.numPages; p++) {
+        renderPdfSingleCanvas(p, `pdf-canvas-p${p}`);
+      }
+    }
+
+    function resetPdfZoom() {
+      pdfCurrentScale = 1.3;
+      const label = document.getElementById('pdfZoomScaleText');
+      if (label) label.innerText = '130%';
+      if (!pdfDocInstance) return;
+      for (let p = 1; p <= pdfDocInstance.numPages; p++) {
+        renderPdfSingleCanvas(p, `pdf-canvas-p${p}`);
+      }
+    }
+
+    /* -------------------------------------------------------------
+       9.4. XEM HÌNH ẢNH TRỰC TUYẾN
+       ------------------------------------------------------------- */
+    function renderImageOnline(doc, container) {
+      const url = doc.fileDataUrl || doc.fileUrl;
+      container.innerHTML = `
+        <div class="w-full h-full p-4 flex items-center justify-center overflow-auto bg-slate-900/40">
+          <img src="${url}" class="max-w-full max-h-full object-contain rounded-xl shadow-2xl border border-white/20" alt="${doc.title}">
+        </div>
+      `;
+    }
+
+    /* -------------------------------------------------------------
+       9.5. XEM BÀI TRÌNH CHIẾU POWERPOINT
+       ------------------------------------------------------------- */
+    function renderPptOnline(doc, container) {
+      const url = doc.fileDataUrl || doc.fileUrl;
+      container.innerHTML = `
+        <div class="w-full h-full p-4 sm:p-8 overflow-y-auto flex flex-col items-center justify-center bg-slate-100">
+          <div class="max-w-md w-full bg-white p-6 sm:p-8 rounded-3xl shadow-xl border border-slate-200 text-center space-y-4">
+            <div class="w-16 h-16 rounded-2xl bg-orange-100 text-orange-600 flex items-center justify-center mx-auto text-3xl shadow-sm">
+              <i class="fa-solid fa-file-powerpoint"></i>
+            </div>
+            <div>
+              <h3 class="text-base font-bold text-slate-900">${doc.title}</h3>
+              <p class="text-xs text-slate-400 mt-1">Bài trình chiếu PowerPoint (${doc.fileSize || '1 MB'})</p>
+            </div>
+            <p class="text-xs text-slate-600 leading-relaxed bg-slate-50 p-3 rounded-xl border border-slate-100">
+              Tệp trình chiếu báo cáo tại hội trường xã Mường Lầm. Đại biểu có thể mở qua ứng dụng PowerPoint trên điện thoại hoặc tải về máy.
+            </p>
+            <a href="${url || '#'}" download="${doc.title}.${doc.fileType}" class="inline-flex items-center px-5 py-2.5 bg-orange-600 hover:bg-orange-700 text-white rounded-xl text-xs font-bold shadow transition">
+              <i class="fa-solid fa-download mr-2"></i> Tải bài trình chiếu
+            </a>
+          </div>
+        </div>
+      `;
+    }
+
+    /* -------------------------------------------------------------
+       9.6. XEM VĂN BẢN MẪU / MÔ PHỎNG NỘI BỘ
+       ------------------------------------------------------------- */
+    function renderSampleDocOnline(doc, container) {
+      container.innerHTML = `
+        <div class="w-full h-full p-4 sm:p-8 overflow-y-auto bg-slate-100 flex justify-center custom-scroll">
+          <div class="max-w-2xl w-full bg-white p-6 sm:p-10 shadow-lg border border-slate-200 rounded-2xl space-y-6 text-slate-800">
+            <div class="text-center border-b border-slate-200 pb-4">
+              <p class="text-xs uppercase font-extrabold text-slate-500 tracking-wider">XÃ MƯỜNG LẦM - TỈNH SƠN LA</p>
+              <h2 class="text-base sm:text-xl font-extrabold text-redgov-800 uppercase mt-1">${doc.title}</h2>
+              <p class="text-xs text-slate-400 mt-1">${currentMeeting.title} • ${currentMeeting.dateTime}</p>
+            </div>
+            <div class="text-xs sm:text-sm leading-relaxed whitespace-pre-line font-serif text-slate-700 bg-slate-50/70 p-5 rounded-xl border border-slate-200/80">
+              ${doc.sampleContent}
+            </div>
+            <div class="pt-6 border-t border-slate-200 flex justify-between text-xs text-slate-400">
+              <span>Ủy ban nhân dân Xã Mường Lầm</span>
+              <span>Lưu hành nội bộ kỳ họp</span>
+            </div>
+          </div>
+        </div>
+      `;
+    }
+
+    function renderGenericFileOnline(doc, container) {
+      const url = doc.fileDataUrl || doc.fileUrl;
+      container.innerHTML = `
+        <div class="text-center p-8 max-w-md bg-white rounded-2xl border border-slate-200 shadow-sm space-y-4 m-4">
+          <div class="w-14 h-14 rounded-2xl bg-slate-100 text-slate-600 flex items-center justify-center mx-auto text-2xl">
+            <i class="fa-solid fa-file-lines"></i>
+          </div>
+          <div>
+            <h4 class="text-base font-bold text-slate-800">${doc.title}</h4>
+            <p class="text-xs text-slate-400 mt-1">Định dạng file: ${doc.fileType.toUpperCase()} (${doc.fileSize})</p>
+          </div>
+          <p class="text-xs text-slate-500 leading-relaxed">
+            Tệp tài liệu đã sẵn sàng trên hệ thống phòng họp xã Mường Lầm.
+          </p>
+          <a href="${url || '#'}" download="${doc.title}.${doc.fileType}" class="inline-flex items-center px-5 py-2.5 bg-redgov-600 hover:bg-redgov-700 text-white rounded-xl text-xs font-bold shadow transition">
+            <i class="fa-solid fa-download mr-2"></i> Tải tệp về máy
+          </a>
+        </div>
+      `;
+    }
+
+    function closeDocViewer() {
+      document.getElementById('docViewerModal').classList.add('hidden');
+      document.getElementById('modalViewerBody').innerHTML = '';
+      activeDocForModal = null;
+    }
+
+    function toggleDocFullscreen() {
+      const modal = document.querySelector('#docViewerModal > div');
+      if (modal.classList.contains('max-w-5xl')) {
+        modal.classList.remove('max-w-5xl', 'h-[92vh]');
+        modal.classList.add('w-screen', 'h-screen', 'rounded-none');
+      } else {
+        modal.classList.add('max-w-5xl', 'h-[92vh]');
+        modal.classList.remove('w-screen', 'h-screen', 'rounded-none');
+      }
+    }
+
+    function toggleBookmarkCurrentDoc() {
+      if (!activeDocForModal) return;
+      alert(`Đã đánh dấu tài liệu "${activeDocForModal.title}" vào danh sách ưu tiên của bạn!`);
+    }
+
+    /* =====================================================================
+       10. TẢI FILE TÀI LIỆU LÊN (UPLOAD CHO THƯ KÝ)
+       ===================================================================== */
+    const dropZone = document.getElementById('dropZone');
+    ['dragenter', 'dragover'].forEach(eventName => {
+      dropZone.addEventListener(eventName, (e) => {
+        e.preventDefault();
+        dropZone.classList.add('border-redgov-600', 'bg-red-50');
+      }, false);
+    });
+    ['dragleave', 'drop'].forEach(eventName => {
+      dropZone.addEventListener(eventName, (e) => {
+        e.preventDefault();
+        dropZone.classList.remove('border-redgov-600', 'bg-red-50');
+      }, false);
+    });
+    dropZone.addEventListener('drop', (e) => {
+      const dt = e.dataTransfer;
+      const files = dt.files;
+      handleFiles(files);
+    });
+
+    function handleFileSelect(event) {
+      handleFiles(event.target.files);
+    }
+
+    function formatBytes(bytes, decimals = 1) {
+      if (!bytes || bytes === 0) return '0 Bytes';
+      const k = 1024;
+      const dm = decimals < 0 ? 0 : decimals;
+      const sizes = ['Bytes', 'KB', 'MB', 'GB'];
+      const i = Math.floor(Math.log(bytes) / Math.log(k));
+      return parseFloat((bytes / Math.pow(k, i)).toFixed(dm)) + ' ' + sizes[i];
+    }
+
+    function handleFiles(files) {
+      if (!files || files.length === 0) return;
+      stagedFiles = [];
+
+      Array.from(files).forEach((file) => {
+        const ext = file.name.split('.').pop().toLowerCase();
+        const reader = new FileReader();
+
+        reader.onload = function(e) {
+          stagedFiles.push({
+            id: 'doc-' + Date.now() + '-' + Math.random().toString(36).substr(2, 5),
+            meetingId: currentMeetingId,
+            name: file.name.replace(/\.[^/.]+$/, ""),
+            rawFile: file,
+            fileName: file.name,
+            fileType: ext,
+            fileSize: formatBytes(file.size),
+            fileDataUrl: e.target.result,
+            mimeType: file.type,
+            dateUploaded: new Date().toLocaleDateString('vi-VN') + ' ' + new Date().toLocaleTimeString('vi-VN', { hour: '2-digit', minute: '2-digit' })
+          });
+          renderStagedFiles();
+        };
+        reader.readAsDataURL(file);
+      });
+    }
+
+    function renderStagedFiles() {
+      const container = document.getElementById('stagedFilesContainer');
+      const list = document.getElementById('stagedFilesList');
+
+      if (stagedFiles.length === 0) {
+        container.classList.add('hidden');
+        list.innerHTML = '';
+        return;
+      }
+
+      container.classList.remove('hidden');
+      list.innerHTML = stagedFiles.map((f, idx) => `
+        <div class="flex items-center justify-between p-2.5 bg-white border border-slate-200 rounded-xl text-xs">
+          <div class="flex items-center space-x-2 overflow-hidden">
+            <i class="fa-solid fa-file-circle-check text-emerald-600"></i>
+            <span class="font-bold text-slate-800 truncate">${f.fileName}</span>
+            <span class="text-slate-400">(${f.fileSize})</span>
+          </div>
+          <button onclick="removeStagedFile(${idx})" class="text-red-500 hover:text-red-700 font-bold px-2 py-1">
+            <i class="fa-solid fa-xmark"></i>
+          </button>
+        </div>
+      `).join('');
+    }
+
+    function removeStagedFile(idx) {
+      stagedFiles.splice(idx, 1);
+      renderStagedFiles();
+    }
+
+    function cancelStagedFiles() {
+      stagedFiles = [];
+      renderStagedFiles();
+      document.getElementById('fileUploadInput').value = '';
+    }
+
+    async function saveStagedFiles() {
+      if (stagedFiles.length === 0) return;
+
+      const category = document.getElementById('stagedCategory').value;
+      const session = document.getElementById('stagedSession').value;
+      const isPinned = document.getElementById('stagedIsPinned').checked;
+
+      for (let f of stagedFiles) {
+        const newDoc = {
+          id: f.id,
+          meetingId: currentMeetingId,
+          title: f.name,
+          category: category,
+          session: session,
+          fileType: f.fileType,
+          fileSize: f.fileSize,
+          fileDataUrl: f.fileDataUrl,
+          mimeType: f.mimeType,
+          dateUploaded: f.dateUploaded,
+          isPinned: isPinned
+        };
+        allDocuments.unshift(newDoc);
+        try {
+          await saveDocToDB(newDoc);
+        } catch (e) {
+          console.error('Lưu IndexedDB lỗi:', e);
+        }
+      }
+
+      stagedFiles = [];
+      renderStagedFiles();
+      document.getElementById('fileUploadInput').value = '';
+      filterDocuments();
+      renderAdminDocsTable();
+      alert(`Đã đưa thành công các tệp tài liệu vào cuộc họp "${currentMeeting.title}"!`);
+    }
+
+    function renderAdminDocsTable() {
+      const tbody = document.getElementById('adminDocsTableBody');
+      const count = document.getElementById('adminDocsCount');
+
+      const meetingDocs = allDocuments.filter(d => (!d.meetingId || d.meetingId === currentMeetingId));
+      count.innerText = meetingDocs.length;
+
+      if (meetingDocs.length === 0) {
+        tbody.innerHTML = `<tr><td colspan="5" class="py-6 text-center text-slate-400">Chưa có tệp nào được tải lên cho cuộc họp này.</td></tr>`;
+        return;
+      }
+
+      tbody.innerHTML = meetingDocs.map(doc => {
+        const fileInfo = getFileIconInfo(doc.fileType);
+        return `
+          <tr class="hover:bg-slate-50 transition">
+            <td class="py-2.5 px-3">
+              <div class="flex items-center space-x-2">
+                <i class="${fileInfo.icon} ${fileInfo.color}"></i>
+                <span class="font-bold text-slate-800 line-clamp-1 max-w-[200px]">${doc.title}</span>
+                ${doc.isPinned ? '<span class="text-[9px] bg-red-100 text-red-700 px-1 py-0.2 rounded font-bold">Ghim</span>' : ''}
+              </div>
+            </td>
+            <td class="py-2.5 px-3">${doc.category}</td>
+            <td class="py-2.5 px-3">${doc.session || 'Phiên chính thức'}</td>
+            <td class="py-2.5 px-3 font-medium">${doc.fileSize || '1 MB'}</td>
+            <td class="py-2.5 px-3 text-right space-x-1">
+              <button onclick="openDocViewer('${doc.id}')" class="p-1 hover:text-redgov-600 font-bold" title="Xem">
+                <i class="fa-regular fa-eye"></i>
+              </button>
+              <button onclick="togglePinDoc('${doc.id}')" class="p-1 hover:text-amber-600 font-bold" title="Ghim / Bỏ ghim">
+                <i class="fa-solid fa-thumbtack"></i>
+              </button>
+              <button onclick="deleteSingleDoc('${doc.id}')" class="p-1 hover:text-red-600 font-bold" title="Xóa">
+                <i class="fa-regular fa-trash-can"></i>
+              </button>
+            </td>
+          </tr>
+        `;
+      }).join('');
+    }
+
+    async function togglePinDoc(id) {
+      const doc = allDocuments.find(d => d.id === id);
+      if (doc) {
+        doc.isPinned = !doc.isPinned;
+        await saveDocToDB(doc);
+        filterDocuments();
+        renderAdminDocsTable();
+      }
+    }
+
+    async function deleteSingleDoc(id) {
+      if (confirm('Đồng chí có chắc chắn muốn xóa tệp tài liệu này không?')) {
+        allDocuments = allDocuments.filter(d => d.id !== id);
+        await deleteDocFromDB(id);
+        filterDocuments();
+        renderAdminDocsTable();
+      }
+    }
+
+    async function confirmClearAllDocs() {
+      if (confirm(`CẢNH BÁO: Thao tác này sẽ xóa tất cả tệp tài liệu của cuộc họp "${currentMeeting.title}"! Đồng chí có chắc chắn không?`)) {
+        const remainingDocs = allDocuments.filter(d => d.meetingId && d.meetingId !== currentMeetingId);
+        const docsToDelete = allDocuments.filter(d => !d.meetingId || d.meetingId === currentMeetingId);
+        for (let d of docsToDelete) {
+          await deleteDocFromDB(d.id);
+        }
+        allDocuments = remainingDocs;
+        filterDocuments();
+        renderAdminDocsTable();
+      }
+    }
+
+    /* =====================================================================
+       11. CHUYỂN TAB & TIỆN ÍCH
+       ===================================================================== */
+    function switchTab(tabId) {
+      document.getElementById('tabContentDocs').classList.add('hidden');
+      document.getElementById('tabContentAgenda').classList.add('hidden');
+      document.getElementById('tabContentNotes').classList.add('hidden');
+      document.getElementById('tabContentAdmin').classList.add('hidden');
+      document.getElementById('tabContentUsers').classList.add('hidden');
+
+      const tabs = ['Docs', 'Agenda', 'Notes', 'Admin', 'Users'];
+      tabs.forEach(t => {
+        const btn = document.getElementById(`tabBtn${t}`);
+        if (btn) {
+          btn.classList.remove('border-redgov-600', 'text-redgov-700', 'font-bold');
+          btn.classList.add('border-transparent');
+        }
+      });
+
+      if (tabId === 'documents') {
+        document.getElementById('tabContentDocs').classList.remove('hidden');
+        setActiveTabBtn('tabBtnDocs');
+      } else if (tabId === 'agenda') {
+        document.getElementById('tabContentAgenda').classList.remove('hidden');
+        setActiveTabBtn('tabBtnAgenda');
+      } else if (tabId === 'notes') {
+        document.getElementById('tabContentNotes').classList.remove('hidden');
+        setActiveTabBtn('tabBtnNotes');
+      } else if (tabId === 'adminManage') {
+        document.getElementById('tabContentAdmin').classList.remove('hidden');
+        setActiveTabBtn('tabBtnAdmin');
+        renderAdminDocsTable();
+      } else if (tabId === 'userManageTab') {
+        document.getElementById('tabContentUsers').classList.remove('hidden');
+        setActiveTabBtn('tabBtnUsers');
+        renderUsersTable();
+      }
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function setActiveTabBtn(btnId) {
+      const btn = document.getElementById(btnId);
+      if (btn) {
+        btn.classList.add('border-redgov-600', 'text-redgov-700', 'font-bold');
+        btn.classList.remove('border-transparent');
+      }
+    }
+
+    function renderAgenda(selectedSession = 'Phiên chính thức') {
+      const container = document.getElementById('agendaTimelineList');
+      const filtered = SAMPLE_AGENDA.filter(item => item.session === selectedSession);
+
+      container.innerHTML = filtered.map(item => {
+        let statusBadge = '<span class="text-[10px] font-bold px-2 py-0.5 rounded-full bg-slate-100 text-slate-600">Sắp diễn ra</span>';
+        let borderLeft = 'border-l-2 border-slate-300';
+        let dotColor = 'bg-slate-300';
+
+        if (item.status === 'done') {
+          statusBadge = '<span class="text-[10px] font-bold px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-700"><i class="fa-solid fa-check mr-1"></i>Đã xong</span>';
+          borderLeft = 'border-l-2 border-emerald-500';
+          dotColor = 'bg-emerald-500';
+        } else if (item.status === 'current') {
+          statusBadge = '<span class="text-[10px] font-bold px-2 py-0.5 rounded-full bg-red-100 text-red-700 animate-pulse"><i class="fa-solid fa-record-vinyl mr-1"></i>Đang diễn ra</span>';
+          borderLeft = 'border-l-2 border-redgov-600';
+          dotColor = 'bg-redgov-600 ring-4 ring-red-100';
+        }
+
+        return `
+          <div class="relative pl-6 pb-2 ${borderLeft} ml-2">
+            <div class="absolute -left-1.5 top-0 w-3 h-3 rounded-full ${dotColor}"></div>
+            <div class="bg-slate-50/70 p-3 sm:p-4 rounded-xl border border-slate-200">
+              <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-1">
+                <div class="flex items-center space-x-2">
+                  <span class="text-xs font-extrabold text-redgov-700 bg-white px-2 py-0.5 rounded border border-slate-200">${item.time}</span>
+                  <h4 class="text-xs sm:text-sm font-bold text-slate-900">${item.title}</h4>
+                </div>
+                ${statusBadge}
+              </div>
+              <p class="text-xs text-slate-500 mt-1.5">${item.desc}</p>
+            </div>
+          </div>
+        `;
+      }).join('');
+    }
+
+    function filterAgendaSession(session) {
+      document.querySelectorAll('.agenda-filter-btn').forEach(btn => {
+        if (btn.innerText.includes(session.split(' ')[1])) {
+          btn.className = 'px-3 py-1.5 rounded-lg bg-white shadow-sm text-redgov-700 agenda-filter-btn font-bold';
+        } else {
+          btn.className = 'px-3 py-1.5 rounded-lg text-slate-600 hover:text-slate-900 agenda-filter-btn';
+        }
+      });
+      renderAgenda(session);
+    }
+
+    function loadNotes() {
+      const saved = localStorage.getItem('delegate_notes');
+      if (saved) document.getElementById('delegateNotesArea').value = saved;
+    }
+
+    function saveNotes() {
+      const val = document.getElementById('delegateNotesArea').value;
+      localStorage.setItem('delegate_notes', val);
+      const status = document.getElementById('noteSaveStatus');
+      status.innerHTML = `<i class="fa-solid fa-check-double text-emerald-600 mr-1"></i> Đã lưu lúc ${new Date().toLocaleTimeString('vi-VN')}`;
+      setTimeout(() => {
+        status.innerHTML = `<i class="fa-solid fa-check text-emerald-500 mr-1"></i> Dữ liệu tự động lưu`;
+      }, 3000);
+    }
+
+    function exportNotesTxt() {
+      const val = document.getElementById('delegateNotesArea').value || 'Chưa có ghi chú';
+      const blob = new Blob([val], { type: 'text/plain;charset=utf-8' });
+      const a = document.createElement('a');
+      a.href = URL.createObjectURL(blob);
+      a.download = `Ghi-Chep-MuongLam-${Date.now()}.txt`;
+      a.click();
+    }
+
+    function openSeatModal() {
+      document.getElementById('seatModal').classList.remove('hidden');
+    }
+
+    function closeSeatModal() {
+      document.getElementById('seatModal').classList.add('hidden');
+    }
+
+    function downloadAllDocsZip() {
+      const meetingDocs = allDocuments.filter(d => (!d.meetingId || d.meetingId === currentMeetingId));
+      alert(`Đang chuẩn bị ${meetingDocs.length} tài liệu của cuộc họp này để tải về...`);
+      meetingDocs.slice(0, 3).forEach((d, idx) => {
+        setTimeout(() => {
+          const a = document.createElement('a');
+          if (d.fileDataUrl) {
+            a.href = d.fileDataUrl;
+            a.download = d.title + '.' + (d.fileType || 'pdf');
+          } else {
+            const blob = new Blob([d.sampleContent || d.title], { type: 'text/plain;charset=utf-8' });
+            a.href = URL.createObjectURL(blob);
+            a.download = d.title + '.txt';
+          }
+          a.click();
+        }, idx * 600);
+      });
+    }
+
+    document.getElementById('delegateNotesArea').addEventListener('input', () => {
+      localStorage.setItem('delegate_notes', document.getElementById('delegateNotesArea').value);
+    });
+
+    window.addEventListener('DOMContentLoaded', initApp);
+  </script>
+</body>
+</html>
